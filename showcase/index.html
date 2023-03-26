@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="deps/countUp.js"></script>
+	<script src="deps/reconnecting-websocket.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="deps/Chart.min.js"></script>
+	<script src="deps/smooth.js"></script>
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="nowplaying-container">
+				<span>now playing <span id="nowplaying">XX</span></span>
+			</div>
+			<div id="replay-container">
+				<span>replay by <span id="replay">replayer</span></span>
+			</div>
+		</div>
+		<div id="footer">
+			<div id="mapimage-container"></div>
+			<div id="stats-container">
+				<div id="strain-container">
+					<div id="strain-background">
+						<div id="strain-dim"></div>
+					</div>
+					<canvas id="strains" width="1420" height="140"></canvas>
+					<div id="progress">
+						<canvas id="strainsProgress" width="1420" height="140"></canvas>
+					</div>
+				</div>
+				<div id="title-container">
+					<span id="title">Placeholder Title</span>
+					<span id="map-diff"><span id="diff">[Placeholder Difficulty]</span> mapped by <span
+							id="mapper">Mapper</span></span>
+				</div>
+				<div id="props-container">
+					<div class="props-group">
+						<span class="props-item">length <span id="len" class="highlight">0:00</span></span>
+						<span class="props-item">bpm <span id="bpm" class="highlight">0</span></span>
+						<span class="props-item">sr <span id="sr" class="highlight">0.00★</span></span>
+					</div>
+					<div class="props-group">
+						<span class="props-item">cs <span id="cs" class="highlight">0</span></span>
+						<span class="props-item">ar <span id="ar" class="highlight">0</span></span>
+						<span class="props-item">od <span id="od" class="highlight">0</span></span>
+					</div>
+				</div>
+			</div>
+			<!-- <div id="logo"><img src="./static/logo.png"></div> -->
+		</div>
+	</div>
+	<script src="index.js"></script>
+</body>
+
+</html>

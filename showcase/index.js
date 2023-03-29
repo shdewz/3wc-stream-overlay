@@ -94,6 +94,7 @@ socket.onmessage = async event => {
 	// update map stats
 	if (mappool && (md5 !== data.menu.bm.md5 || (mods !== state2 == 7 ? data.resultsScreen.mods.str : data.menu.mods.str) || state2 !== data.menu.state)) {
 		let map = mappool ? mappool.beatmaps.find(m => m.beatmap_id == data.menu.bm.id) || { id: data.menu.bm.id, mods: 'NM', identifier: '', sr: 0.00 } : { mods: 'NM' };
+		console.log(map);
 		md5 = data.menu.bm.md5;
 		state2 = data.menu.state;
 		mods = state2 == 7 ? data.resultsScreen.mods.str : data.menu.mods.str;
@@ -152,11 +153,12 @@ socket.onmessage = async event => {
 
 	let now = Date.now();
 	if (fulltime !== data.menu.bm.time.mp3) { fulltime = data.menu.bm.time.mp3; onepart = 1420 / fulltime; }
-	if (seek !== data.menu.bm.time.current && fulltime !== undefined && fulltime != 0 && now - last_strain_update > 500) {
+	if (seek !== data.menu.bm.time.current && fulltime !== undefined && fulltime != 0 && now - last_strain_update > 100) {
 		last_strain_update = now;
 		seek = data.menu.bm.time.current;
-		let width = onepart * seek + 'px';
-		progressChart.style.width = width;
+		let maskPosition = `${-1420 + onepart * seek}px 0px`;
+		progressChart.style.maskPosition = maskPosition;
+		progressChart.style.webkitMaskPosition = maskPosition;
 	}
 }
 

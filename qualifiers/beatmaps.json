@@ -1,0 +1,65 @@
+{
+    "stage": "qualifiers",
+    "beatmaps": [
+        {
+            "beatmap_id": 3544033,
+            "identifier": "NM1",
+            "mods": "NM",
+            "sr": 6.95
+        },
+        {
+            "beatmap_id": 2974083,
+            "identifier": "NM2",
+            "mods": "NM",
+            "sr": 7.27
+        },
+        {
+            "beatmap_id": 3809913,
+            "identifier": "NM3",
+            "mods": "NM",
+            "sr": 6.62
+        },
+        {
+            "beatmap_id": 3740872,
+            "identifier": "NM4",
+            "mods": "NM",
+            "sr": 6.23
+        },
+        {
+            "beatmap_id": 3394210,
+            "identifier": "HD1",
+            "mods": "HD",
+            "sr": 6.33
+        },
+        {
+            "beatmap_id": 3316770,
+            "identifier": "HD2",
+            "mods": "HD",
+            "sr": 5.93
+        },
+        {
+            "beatmap_id": 2595779,
+            "identifier": "HR1",
+            "mods": "HR",
+            "sr": 6.74
+        },
+        {
+            "beatmap_id": 3192828,
+            "identifier": "HR2",
+            "mods": "HR",
+            "sr": 6.71
+        },
+        {
+            "beatmap_id": 1148834,
+            "identifier": "DT1",
+            "mods": "DT",
+            "sr": 7.01
+        },
+        {
+            "beatmap_id": 3352257,
+            "identifier": "DT2",
+            "mods": "DT",
+            "sr": 7.42
+        }
+    ]
+}

@@ -5,7 +5,7 @@
 ### main scene  
 | source        | url/path                     | width | height | x      | y      |
 |---------------|------------------------------|-------|--------|--------|--------|
-| vc_overlay*   |                              | 480   | 100    |        |        |
+| vc_overlay*   |                              | 480   | 100    | 0      | 880    |
 | osu clients** |                              | 480   | 360    | varies | varies |
 | logo          | `/main/static/logo.png`      | 256   | 256    | 832    | 209    |
 | main_overlay  | http://localhost:24050/main/ | 1920  | 1080   | 0      | 0      |
@@ -16,7 +16,7 @@
 ### mappool
 | source           | url/path                        | width | height | x | y   |
 |------------------|---------------------------------|-------|--------|---|-----|
-| vc_overlay       |                                 | 480   | 100    |   |     |
+| vc_overlay       |                                 | 480   | 100    | 0 | 880 |
 | mappool_overlay* | http://localhost:24050/mappool/ | 1920  | 700    | 0 | 220 |
 | main_overlay     | http://localhost:24050/main/    | 1920  | 1080   | 0 | 0   |
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css?t=<?php echo time()?>">
+    <script src="deps/countUp.js"></script>
+    <script src="deps/reconnecting-websocket.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="deps/Chart.min.js"></script>
+    <script src="deps/smooth.js"></script>
+</head>
+
+<body>
+    <div id="main">
+        <div id="full-overlay">
+            <div id="header">
+                <div id="red-points"></div>
+                <div id="blue-points"></div>
+                <div id="red-name">Red Team</div>
+                <div id="blue-name">Blue Team</div>
+                <div id="red-bar"></div>
+                <div id="blue-bar"></div>
+                <img id="red-flag">
+                <img id="blue-flag">
+                <div id="logo">3 DIGIT WORLD CUP</div>
+                <div id="stage-outer-container">
+                    <div id="stage-container">
+                        <div id="stage-name">-</div>
+                    </div>
+                </div>
+            </div>
+            <div id="gameplay-area"></div>
+            <div id="footer">
+                <div id="top-footer">
+                    <div id="lead-bar"></div>
+                    <div id="score-red">0</div>
+                    <div id="score-blue">0</div>
+                </div>
+                <div id="bottom-footer">
+                    <div id="mapimage-container">
+                        <p id="picked-by-label">PICK BY</p>
+                    </div>
+                    <div id="stats-container">
+                        <div id="strain-container">
+                            <div id="strain-background">
+                                <div id="strain-dim"></div>
+                            </div>
+                            <canvas id="strains" width="1220" height="100"></canvas>
+                            <div id="progress">
+                                <canvas id="strainsProgress" width="1220" height="100"></canvas>
+                            </div>
+                        </div>
+                        <div id="title-container">
+                            <span id="title">Placeholder Title</span>
+                            <span id="map-diff"><span id="diff">[Placeholder Difficulty]</span> mapped by <span
+                                    id="mapper">Mapper</span></span>
+                        </div>
+                        <div id="props-container">
+                            <div class="props-group">
+                                <span class="props-item">length <span id="len" class="highlight">0:00</span></span>
+                                <span class="props-item">bpm <span id="bpm" class="highlight">0</span></span>
+                                <span class="props-item">sr <span id="sr" class="highlight">0.00</span></span>
+                            </div>
+                            <div class="props-group">
+                                <span class="props-item">cs <span id="cs" class="highlight">0</span></span>
+                                <span class="props-item">ar <span id="ar" class="highlight">0</span></span>
+                                <span class="props-item">od <span id="od" class="highlight">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="chat-container">
+                    <div id="chat"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="index.js?t=<?php echo time()?>"></script>
+</body>
+
+</html>

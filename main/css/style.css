@@ -54,7 +54,7 @@ html {
 	flex-direction: column;
 	width: 1920px;
 	height: 1080px;
-	background-image: url('../static/overlay1.png');
+	background-color: #f8f8f8;
 }
 
 #logo {

@@ -9,7 +9,7 @@ let mappool, teams;
 let socket = new ReconnectingWebSocket('ws://' + location.host + '/ws');
 
 let image_container = document.getElementById('mapimage-container');
-let pick_label = document.getElementById('picked-by-label');
+// let pick_label = document.getElementById('picked-by-label');
 let strain_background = document.getElementById('strain-background');
 let title = document.getElementById('title');
 let diff = document.getElementById('diff');
@@ -84,8 +84,8 @@ window.setInterval(() => {
 			if (true) {  // bypass beatmap id checking during development
 				// if (map.beatmap_id === parsedBeatmapID) {
 				image_container.style.borderLeft = `34px solid ${cookieValue[1] === 'red' ? '#ff8d8d' : '#93b5ff'}`;
-				pick_label.style.color = cookieValue[1] === 'red' ? '#330505' : '#0c1c40';
-				pick_label.style.display = 'block';
+				// pick_label.style.color = cookieValue[1] === 'red' ? '#330505' : '#0c1c40';
+				// pick_label.style.display = 'block';
 				return 0;
 			}
 			return -255;

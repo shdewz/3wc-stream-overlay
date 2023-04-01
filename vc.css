@@ -28,15 +28,19 @@ ul {
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] {
     display: flex;
+    width: fit-content;
     align-items: center;
     justify-content: flex-start;
     padding: 0;
+    background-color: #1e2124;
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] {
     width: var(--widthPX);
     height: var(--height);
-    margin-right: 10px;
+    margin-right: 8px;
+    margin-left: 8px;
+    margin-bottom: 0px;
     background-color: black;
     position: relative;
     text-align: center;
@@ -65,9 +69,12 @@ ul {
     width: 100%;
 }
 
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] + [class^="Voice_user"] {
+    background-color: #92de83 !important;
+}
+
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class^="Voice_user"] [class^="Voice_name"] {
     font-size: 13px !important;
-    background-color: red !important;
     padding: 0px;
     margin: 0px;
     height: 0;

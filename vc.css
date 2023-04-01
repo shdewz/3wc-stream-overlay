@@ -1,5 +1,5 @@
-/* CHANGE TO STREAMER ID TO HIDE */
-[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"]:has([src*="avatars/STREAMER_ID/"]) {
+/* hide nth user */
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"]:nth-child(99) {
     display: none;
 }
 

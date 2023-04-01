@@ -94,7 +94,7 @@ window.setInterval(() => {
 
 	if (checkValid() !== 0) {
 		image_container.style.borderLeft = '34px solid rgba(255,255,255,0)';
-		pick_label.style.display = 'none';
+		// pick_label.style.display = 'none';
 	}
 }, 200);
 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/style.css?t=<?php echo time()?>">
+	<script src="deps/countUp.js"></script>
+	<script src="deps/reconnecting-websocket.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+	<div id="main">
+		<div id="full-overlay">
+			<div id="coming-up">
+				<div id="timer">00:00</div>
+				<!-- <h3 id="time">00:00 UTC</h3> -->
+			</div>
+			<div id="team-container">
+				<div class="team">
+					<div class="flag-col red">
+						<img id="red-flag">
+					</div>
+					<div class="player-col red">
+						<div class="team-name red" id="red-team"></div>
+						<div class="player red" id="red-player-1"></div>
+						<div class="player red" id="red-player-2"></div>
+						<div class="player red" id="red-player-3"></div>
+						<div class="player red" id="red-player-4"></div>
+						<div class="player red" id="red-player-5"></div>
+						<div class="player red" id="red-player-6"></div>
+					</div>
+				</div>
+				<div class="team vs">vs</div>
+				<div class="team">
+					<div class="player-col blue">
+						<div class="team-name blue" id="blue-team"></div>
+						<div class="player blue" id="blue-player-1"></div>
+						<div class="player blue" id="blue-player-2"></div>
+						<div class="player blue" id="blue-player-3"></div>
+						<div class="player blue" id="blue-player-4"></div>
+						<div class="player blue" id="blue-player-5"></div>
+						<div class="player blue" id="blue-player-6"></div>
+					</div>
+					<div class="flag-col blue">
+						<img id="blue-flag">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="title"></div>
+	</div>
+	<script src="index.js"></script>
+</body>
+
+</html>

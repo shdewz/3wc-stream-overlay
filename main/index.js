@@ -275,7 +275,7 @@ socket.onmessage = event => {
 	if (scoreVisible) {
 		let scores = [];
 		for (let i = 0; i < 6; i++) {
-			let score = data.tourney.ipcClients[i].gameplay.accuracy;
+			let score = data.tourney.ipcClients[i].gameplay.score;
 			if (data.tourney.ipcClients[i].gameplay.mods.str.includes('EZ')) score *= 1.75;
 			scores.push({ id: i, score });
 		}
@@ -283,11 +283,8 @@ socket.onmessage = event => {
 		scoreRed = scores.filter(s => s.id == 0 || s.id == 1 || s.id == 2).map(s => s.score).reduce((a, b) => a + b);
 		scoreBlue = scores.filter(s => s.id == 3 || s.id == 4 || s.id == 5).map(s => s.score).reduce((a, b) => a + b);
 
-		// scoreRed = 1634573;
-		// scoreBlue = 1286534;
-
-		(scoreRed >= 0 && scoreRed <= 4000000) ? animation.red_score.update(scoreRed) : console.log('scoreRed out of range: ' + scoreRed);
-		(scoreBlue >= 0 && scoreBlue <= 4000000) ? animation.blue_score.update(scoreBlue) : console.log('scoreBlue out of range: ' + scoreBlue);
+		animation.red_score.update(scoreRed);
+		animation.blue_score.update(scoreBlue);
 
 		if (scoreRed > scoreBlue) {
 			red_score.style.fontWeight = '700';

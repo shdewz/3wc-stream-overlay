@@ -44,6 +44,20 @@ html {
 	background-color: #f8f8f8;
 }
 
+#stage-container {
+	position: absolute;
+	top: 220px;
+	right: 1140px;
+}
+
+#stage {
+	color: #92de83;
+	font-size: 40px;
+	font-weight: 700;
+	letter-spacing: 4px;
+	text-align: right;
+}
+
 #coming-up {
 	position: absolute;
 	bottom: 472px;

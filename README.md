@@ -42,6 +42,8 @@
 |------------------|---------------------------------|-------|--------|---|-----|
 | winner_overlay   | http://localhost:24050/winner/  | 1920  | 1080   | 0 | 0   |
 
+Intro and winner scenes can also have the vc overlay bottom left if needed
+
 Add a 300ms luma wipe transition between the scenes
 
 ### Interacting with the mappool

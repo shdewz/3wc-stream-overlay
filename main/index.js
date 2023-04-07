@@ -9,7 +9,7 @@ let mappool, teams;
 let socket = new ReconnectingWebSocket('ws://' + location.host + '/ws');
 
 let image_container = document.getElementById('mapimage-container');
-// let pick_label = document.getElementById('picked-by-label');
+let pick_label = document.getElementById('picked-by-label');
 let strain_background = document.getElementById('strain-background');
 let title = document.getElementById('title');
 let diff = document.getElementById('diff');
@@ -65,8 +65,8 @@ let tempClass = 'unknown';
 
 let bestOf, firstTo;
 let scoreVisible, starsVisible;
-let starsRed, scoreRed, nameRed;
-let starsBlue, scoreBlue, nameBlue;
+let starsRed, scoreRed, nameRed, flagRed;
+let starsBlue, scoreBlue, nameBlue, flagBlue;
 
 let map;
 window.setInterval(() => {
@@ -84,8 +84,9 @@ window.setInterval(() => {
 			// if (true) {  // bypass beatmap id checking during development
 				if (map.beatmap_id === parsedBeatmapID) {
 				image_container.style.borderLeft = `34px solid ${cookieValue[1] === 'red' ? '#ff8d8d' : '#93b5ff'}`;
-				// pick_label.style.color = cookieValue[1] === 'red' ? '#330505' : '#0c1c40';
-				// pick_label.style.display = 'block';
+				pick_label.innerHTML = cookieValue[1] === 'red' ? `${flagRed || 'R'} PICK` : `${flagBlue || 'B'} PICK`;
+				pick_label.style.color = cookieValue[1] === 'red' ? '#7a1d1d' : '#1d307a';
+				pick_label.style.display = 'block';
 				return 0;
 			}
 			return -255;
@@ -94,7 +95,7 @@ window.setInterval(() => {
 
 	if (checkValid() !== 0) {
 		image_container.style.borderLeft = '34px solid rgba(255,255,255,0)';
-		// pick_label.style.display = 'none';
+		pick_label.style.display = 'none';
 	}
 }, 200);
 
@@ -245,14 +246,16 @@ socket.onmessage = event => {
 		nameRed = data.tourney.manager.teamName.left || 'Red Team';
 		red_name.innerHTML = nameRed;
 		let team = teams.find(t => t.name == nameRed);
-		if (team) { red_flag.src = `https://assets.ppy.sh/old-flags/${team.flag}.png`; red_flag.style.visibility = 'visible' }
+		flagRed = team?.flag || null;
+		if (flagRed) { red_flag.src = `https://assets.ppy.sh/old-flags/${flagRed}.png`; red_flag.style.visibility = 'visible' }
 		else red_flag.style.visibility = 'hidden';
 	}
 	if (teams && nameBlue !== data.tourney.manager.teamName.right && data.tourney.manager.teamName.right) {
 		nameBlue = data.tourney.manager.teamName.right || 'Blue Team';
 		blue_name.innerHTML = nameBlue;
 		let team = teams.find(t => t.name == nameBlue);
-		if (team) { blue_flag.src = `https://assets.ppy.sh/old-flags/${team.flag}.png`; blue_flag.style.visibility = 'visible' }
+		flagBlue = team?.flag || null;
+		if (flagBlue) { blue_flag.src = `https://assets.ppy.sh/old-flags/${flagBlue}.png`; blue_flag.style.visibility = 'visible' }
 		else blue_flag.style.visibility = 'hidden';
 	}
 
@@ -401,7 +404,7 @@ let config = {
 		labels: [],
 		datasets: [{
 			borderColor: 'rgba(5, 5, 5, 0)',
-			backgroundColor: 'rgba(255, 255, 255, 0.1)',
+			backgroundColor: 'rgba(255, 255, 255, 0.15)',
 			data: [],
 			fill: true,
 		}]
@@ -429,7 +432,7 @@ let configProgress = {
 		labels: [],
 		datasets: [{
 			borderColor: 'rgba(245, 245, 245, 0)',
-			backgroundColor: 'rgba(255, 255, 255, 0.15)',
+			backgroundColor: 'rgba(255, 255, 255, 0.2)',
 			data: [],
 			fill: true,
 		}]

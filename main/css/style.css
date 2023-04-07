@@ -45,7 +45,16 @@ html {
 	width: 1920px;
 	height: 1080px;
 	position: relative;
-	background-color: #f8f8f8;
+	/* background-color: #f8f8f8; */
+}
+
+#bg-video {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	z-index: -10;
 }
 
 #full-overlay {
@@ -54,7 +63,7 @@ html {
 	flex-direction: column;
 	width: 1920px;
 	height: 1080px;
-	background-color: #f8f8f8;
+	/* background-color: #f8f8f8; */
 }
 
 #logo {
@@ -278,13 +287,15 @@ html {
 }
 
 #picked-by-label {
-	rotate: 270deg;
+	writing-mode: vertical-rl;
+	transform: rotate(180deg);
 	position: absolute;
-	bottom: 18px;
-	left: -26px;
-	color: #222;
-	font-weight: bold;
-	font-size: larger;
+	text-align: center;
+	bottom: 12px;
+	left: -12px;
+	color: #222222;
+	font-weight: 700;
+	font-size: 17px;
 	transition: 200ms;
 }
 

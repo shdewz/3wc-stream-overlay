@@ -13,6 +13,9 @@
 
 <body>
     <div id="main">
+        <video autoplay muted loop id="bg-video">
+			<source src="./static/bg.mp4" type="video/mp4">
+		</video>
         <div id="full-overlay">
             <div id="header">
                 <div id="red-points"></div>
@@ -39,16 +42,16 @@
                 </div>
                 <div id="bottom-footer">
                     <div id="mapimage-container">
-                        <!--<p id="picked-by-label">PICK BY</p>-->
+                        <p id="picked-by-label">XX PICK</p>
                     </div>
                     <div id="stats-container">
                         <div id="strain-container">
                             <div id="strain-background">
                                 <div id="strain-dim"></div>
                             </div>
-                            <canvas id="strains" width="1220" height="100"></canvas>
+                            <canvas id="strains" width="1420" height="100"></canvas>
                             <div id="progress">
-                                <canvas id="strainsProgress" width="1220" height="100"></canvas>
+                                <canvas id="strainsProgress" width="1420" height="100"></canvas>
                             </div>
                         </div>
                         <div id="title-container">

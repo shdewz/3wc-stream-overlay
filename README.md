@@ -30,6 +30,20 @@
 
 <sup>*position changes per round depending on mappool size to center in the middle</sup>
 
+### intro*
+| source           | url/path                        | width | height | x | y   |
+|------------------|---------------------------------|-------|--------|---|-----|
+| intro_overlay    | http://localhost:24050/intro/   | 1920  | 1080   | 0 | 0   |
+
+<sup>*data pulled from `_data/coming_up.json`, requires exchanging between matches</sup>
+
+### winner
+| source           | url/path                        | width | height | x | y   |
+|------------------|---------------------------------|-------|--------|---|-----|
+| winner_overlay   | http://localhost:24050/winner/  | 1920  | 1080   | 0 | 0   |
+
+Intro and winner scenes can also have the vc overlay bottom left if needed
+
 Add a 300ms luma wipe transition between the scenes
 
 ### Interacting with the mappool
@@ -37,3 +51,13 @@ Add a 300ms luma wipe transition between the scenes
 - Right click: right (blue) team pick
 - Ctrl+Click: ban
 - Shift+Click: clear
+
+## Other
+
+### _data folder
+
+Not included here. Contains the following items:
+- `teams.json` - list of teams, static
+- `beatmaps.json` - simple beatmap list, exchanged weekly
+- `beatmap_data.json` - full beatmap data, exchanged weekly
+- `coming_up.json` - time and team names for a match, exchanged every match, used for intro screen

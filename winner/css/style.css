@@ -41,7 +41,16 @@ html {
 	height: 1080px;
 	position: relative;
 	background-image: url('../static/winscreen.png');
-	background-color: #f8f8f8;
+	/* background-color: #f8f8f8; */
+}
+
+#bg-video {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	z-index: -10;
 }
 
 #stage-container {

@@ -73,7 +73,7 @@ socket.onmessage = async event => {
 	// update background image
 	if (image !== data.menu.bm.path.full) {
 		image = data.menu.bm.path.full;
-		data.menu.bm.path.full = data.menu.bm.path.full.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/');
+		data.menu.bm.path.full = data.menu.bm.path.full.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/').replace(/'/g, "\\'");
 		image_container.style.backgroundImage = `url('http://${location.host}/Songs/${data.menu.bm.path.full}')`;
 		strain_background.style.backgroundImage = `url('http://${location.host}/Songs/${data.menu.bm.path.full}')`;
 	}
@@ -94,7 +94,6 @@ socket.onmessage = async event => {
 	// update map stats
 	if (mappool && (md5 !== data.menu.bm.md5 || (mods !== state2 == 7 ? data.resultsScreen.mods.str : data.menu.mods.str) || state2 !== data.menu.state)) {
 		let map = mappool ? mappool.beatmaps.find(m => m.beatmap_id == data.menu.bm.id) || { id: data.menu.bm.id, mods: 'NM', identifier: '', sr: 0.00 } : { mods: 'NM' };
-		console.log(map);
 		md5 = data.menu.bm.md5;
 		state2 = data.menu.state;
 		mods = state2 == 7 ? data.resultsScreen.mods.str : data.menu.mods.str;

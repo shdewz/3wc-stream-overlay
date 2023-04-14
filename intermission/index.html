@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/style.css?t=<?php echo time()?>">
+	<script src="deps/countUp.js"></script>
+	<script src="deps/reconnecting-websocket.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+	<div id="main">
+		<video autoplay muted loop id="bg-video">
+			<source src="./static/bg.mp4" type="video/mp4">
+		</video>
+		<div id="full-overlay">
+			<h3 id="title-text" contenteditable="true" spellcheck="false">WE'LL BE RIGHT BACK</h3>
+			<h3 id="title-desc" contenteditable="true" spellcheck="false">HIDE</h3>
+		</div>
+		<div id="title"></div>
+	</div>
+	<img id="dvd" src="./static/logo-transparent.png"></img>
+	<script src="index.js"></script>
+</body>
+
+</html>

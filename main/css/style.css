@@ -291,12 +291,21 @@ html {
 	transform: rotate(180deg);
 	position: absolute;
 	text-align: center;
-	bottom: 12px;
+	bottom: 44px;
 	left: -12px;
 	color: #222222;
 	font-weight: 700;
 	font-size: 17px;
 	transition: 200ms;
+}
+
+#picked-by-flag {
+	transform: rotate(270deg);
+	position: absolute;
+	bottom: 14px;
+	left: 2px;
+	width: calc(70px / 2.5);
+	filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.1));
 }
 
 #stats-container {

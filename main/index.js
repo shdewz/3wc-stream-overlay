@@ -69,13 +69,13 @@ let scoreVisible, starsVisible;
 let starsRed, scoreRed, nameRed, flagRed;
 let starsBlue, scoreBlue, nameBlue, flagBlue;
 
-let map;
+let map, mapid;
 window.setInterval(() => {
 	let cookieName = 'lastPick';
 	const match = document.cookie.match(`(?:^|.*)${cookieName}=(.+?)(?:$|[|;].*)`);
 
 	let checkValid = () => {
-		if (map === undefined) return -9;
+		if (!mapid) return -9;
 		if (match) {
 			let cookieValue = match[1].split('-');
 			if (cookieValue.length !== 2) return -1;  // expected format: <beatmap_id>-<picking_team>
@@ -83,12 +83,13 @@ window.setInterval(() => {
 			if (isNaN(parsedBeatmapID)) return -2;
 
 			// if (true) {  // bypass beatmap id checking during development
-				if (map.beatmap_id === parsedBeatmapID) {
+			if (mapid == parsedBeatmapID) {
 				image_container.style.borderLeft = `34px solid ${cookieValue[1] === 'red' ? '#ff8d8d' : '#93b5ff'}`;
 				if (flagRed && flagBlue) pick_flag.src = `https://assets.ppy.sh/old-flags/${cookieValue[1] === 'red' ? flagRed : flagBlue}.png`;
 				else pick_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
 				pick_label.style.color = cookieValue[1] === 'red' ? '#7a1d1d' : '#1d307a';
 				pick_label.style.display = 'block';
+				pick_flag.style.display = 'block';
 				return 0;
 			}
 			return -255;
@@ -104,6 +105,8 @@ window.setInterval(() => {
 
 socket.onmessage = event => {
 	let data = JSON.parse(event.data);
+
+	if (mapid != data.menu.bm.id) mapid = data.menu.bm.id;
 
 	if (scoreVisible !== data.tourney.manager.bools.scoreVisible) {
 		scoreVisible = data.tourney.manager.bools.scoreVisible;

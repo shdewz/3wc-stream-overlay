@@ -84,6 +84,8 @@ window.setInterval(() => {
 
 			// if (true) {  // bypass beatmap id checking during development
 			if (mapid == parsedBeatmapID) {
+				let map_obj = mappool.beatmaps.find(m => m.beatmap_id == mapid);
+				if (map_obj.identifier.toUpperCase().includes('TB')) return -3;
 				image_container.style.borderLeft = `34px solid ${cookieValue[1] === 'red' ? '#ff8d8d' : '#93b5ff'}`;
 				if (flagRed && flagBlue) pick_flag.src = `https://assets.ppy.sh/old-flags/${cookieValue[1] === 'red' ? flagRed : flagBlue}.png`;
 				else pick_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
@@ -285,7 +287,7 @@ socket.onmessage = event => {
 		let scores = [];
 		for (let i = 0; i < 6; i++) {
 			let score = data.tourney.ipcClients[i].gameplay.score;
-			if (data.tourney.ipcClients[i].gameplay.mods.str.includes('EZ')) score *= 1.75;
+			if (data.tourney.ipcClients[i].gameplay.mods.str.toLowerCase().includes('EZ')) score *= 1.75;
 			scores.push({ id: i, score });
 		}
 

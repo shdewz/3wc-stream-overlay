@@ -287,12 +287,12 @@ socket.onmessage = event => {
 		let scores = [];
 		for (let i = 0; i < 6; i++) {
 			let score = data.tourney.ipcClients[i].gameplay.score;
-			if (data.tourney.ipcClients[i].gameplay.mods.str.toLowerCase().includes('EZ')) score *= 1.75;
+			if (data.tourney.ipcClients[i].gameplay.mods.str.includes('EZ')) score *= 1.75;
 			scores.push({ id: i, score });
 		}
 
-		scoreRed = scores.filter(s => s.id == 0 || s.id == 1 || s.id == 2).map(s => s.score).reduce((a, b) => a + b);
-		scoreBlue = scores.filter(s => s.id == 3 || s.id == 4 || s.id == 5).map(s => s.score).reduce((a, b) => a + b);
+		scoreRed = scores.filter(s => [0, 1, 2].includes(s.id)).map(s => s.score).reduce((a, b) => a + b);
+		scoreBlue = scores.filter(s => [3, 4, 5].includes(s.id)).map(s => s.score).reduce((a, b) => a + b);
 
 		animation.red_score.update(scoreRed);
 		animation.blue_score.update(scoreBlue);

@@ -2,7 +2,7 @@ let mappool, teams;
 (async () => {
 	$.ajaxSetup({ cache: false });
 	mappool = await $.getJSON('../_data/beatmaps.json');
-	teams = await $.getJSON('../_data/teams.json');
+	// teams = await $.getJSON('../_data/teams.json');
 	document.getElementById('stage-name').innerHTML = mappool.stage.toUpperCase();
 })();
 
@@ -32,6 +32,8 @@ let blue_points = document.getElementById('blue-points');
 let blue_score = document.getElementById('score-blue');
 let blue_flag = document.getElementById('blue-flag');
 
+let score_diff = document.getElementById('scorediff');
+
 let lead_bar = document.getElementById('lead-bar');
 let chat_container = document.getElementById('chat-container');
 let stats_container = document.getElementById('stats-container');
@@ -46,6 +48,7 @@ socket.onopen = () => { console.log('Successfully Connected'); };
 let animation = {
 	red_score: new CountUp('score-red', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
 	blue_score: new CountUp('score-blue', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
+	score_diff: new CountUp('scorediff', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
 }
 
 socket.onclose = event => {
@@ -85,8 +88,9 @@ window.setInterval(() => {
 			// if (true) {  // bypass beatmap id checking during development
 			if (mapid == parsedBeatmapID) {
 				let map_obj = mappool.beatmaps.find(m => m.beatmap_id == mapid);
+				if (!map_obj) return -4;
 				if (map_obj.identifier.toUpperCase().includes('TB')) return -3;
-				image_container.style.borderLeft = `34px solid ${cookieValue[1] === 'red' ? '#ff8d8d' : '#93b5ff'}`;
+				image_container.style.borderLeft = `34px solid ${cookieValue[1] === 'red' ? 'var(--red)' : 'var(--blue)'}`;
 				if (flagRed && flagBlue) pick_flag.src = `https://assets.ppy.sh/old-flags/${cookieValue[1] === 'red' ? flagRed : flagBlue}.png`;
 				else pick_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
 				pick_label.style.color = cookieValue[1] === 'red' ? '#7a1d1d' : '#1d307a';
@@ -237,7 +241,7 @@ socket.onmessage = event => {
 			document.getElementById(`red${i}`).style.backgroundColor = '#1d1d1d';
 		}
 		for (let i = starsRed + 1; i <= firstTo; i++) {
-			document.getElementById(`red${i}`).style.backgroundColor = 'unset';
+			document.getElementById(`red${i}`).style.backgroundColor = 'var(--light)';
 		}
 	}
 	if (starsBlue !== data.tourney.manager.stars.right) {
@@ -246,7 +250,7 @@ socket.onmessage = event => {
 			document.getElementById(`blue${i}`).style.backgroundColor = '#1d1d1d';
 		}
 		for (let i = starsBlue + 1; i <= firstTo; i++) {
-			document.getElementById(`blue${i}`).style.backgroundColor = 'unset';
+			document.getElementById(`blue${i}`).style.backgroundColor = 'var(--light)';
 		}
 	}
 
@@ -256,7 +260,7 @@ socket.onmessage = event => {
 		let team = teams.find(t => t.name == nameRed);
 		flagRed = team?.flag || null;
 		if (flagRed) { red_flag.src = `https://assets.ppy.sh/old-flags/${flagRed}.png`; red_flag.style.visibility = 'visible' }
-		else red_flag.style.visibility = 'hidden';
+		else red_flag.style.visibility = 'visible';
 	}
 	if (teams && nameBlue !== data.tourney.manager.teamName.right && data.tourney.manager.teamName.right) {
 		nameBlue = data.tourney.manager.teamName.right || 'Blue Team';
@@ -264,7 +268,7 @@ socket.onmessage = event => {
 		let team = teams.find(t => t.name == nameBlue);
 		flagBlue = team?.flag || null;
 		if (flagBlue) { blue_flag.src = `https://assets.ppy.sh/old-flags/${flagBlue}.png`; blue_flag.style.visibility = 'visible' }
-		else blue_flag.style.visibility = 'hidden';
+		else blue_flag.style.visibility = 'visible';
 	}
 
 	let now = Date.now();
@@ -294,8 +298,14 @@ socket.onmessage = event => {
 		scoreRed = scores.filter(s => [0, 1, 2].includes(s.id)).map(s => s.score).reduce((a, b) => a + b);
 		scoreBlue = scores.filter(s => [3, 4, 5].includes(s.id)).map(s => s.score).reduce((a, b) => a + b);
 
+		// scoreRed = 1624158;
+		// scoreBlue = 983863;
+
+		let scoreDiff = Math.abs(scoreRed - scoreBlue);
+
 		animation.red_score.update(scoreRed);
 		animation.blue_score.update(scoreBlue);
+		animation.score_diff.update(scoreDiff);
 
 		if (scoreRed > scoreBlue) {
 			red_score.style.fontWeight = '700';

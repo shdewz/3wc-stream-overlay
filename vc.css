@@ -1,7 +1,5 @@
-/* hide nth user */
-[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"]:nth-child(99) {
-    display: none;
-}
+/* hide user by ID */
+[data-userid="0"] { display: none; }
 
 body {
     --width: 120;
@@ -28,11 +26,11 @@ ul {
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] {
     display: flex;
-    width: fit-content;
+    width: 100%;
     align-items: center;
     justify-content: flex-start;
     padding: 0;
-    background-color: #1e2124;
+    gap: 0;
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] {
@@ -59,7 +57,7 @@ ul {
 
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class^="Voice_user"] {
-    background-color: #1e2124;
+    background-color: #111111;
     position: absolute;
     bottom: 0px;
     padding: 0px;
@@ -68,7 +66,11 @@ ul {
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] + [class^="Voice_user"] {
-    background-color: #92de83 !important;
+    background-color: #6dd46d !important;
+}
+
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] + [class^="Voice_user"] [class^="Voice_name"] {
+    color: #112611 !important;
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class^="Voice_user"] [class^="Voice_name"] {

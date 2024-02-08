@@ -24,20 +24,20 @@ let strain_container = document.getElementById('strain-container');
 let mappool;
 (async () => {
 	$.ajaxSetup({ cache: false });
-	mappool = (await $.getJSON('../_data/beatmaps.json'));
+	mappool = (await $.getJSON('../_data/beatmaps.json')).beatmaps;
 })();
 
 socket.onopen = () => { console.log('Successfully Connected'); };
 socket.onclose = event => { console.log('Socket Closed Connection: ', event); socket.send('Client Closed!'); };
 socket.onerror = error => { console.log('Socket Error: ', error); };
 
-let image, title_, diff_, artist_, replay_, id;
-let len_, bpm_, sr_, cs_, ar_, od_, md5;
-let mods, state, state2;
+let image, title_, diff_, artist_, replay_, id, md5;
+let len_, bpm_, sr_, cs_, ar_, od_;
 let strains, seek, fulltime;
+let state;
 let last_strain_update = 0;
-let new_strains = [];
-let strain_seed = 0;
+let update_stats = false;
+let update_stats_check = true;
 
 
 socket.onmessage = async event => {
@@ -55,11 +55,56 @@ socket.onmessage = async event => {
 		}
 	}
 
+	if (update_stats_check && mappool && (id !== data.menu.bm.id || md5 !== data.menu.bm.md5)) {
+		update_stats_check = false;
+		await delay(500);
+		update_stats = true;
+		update_stats_check = true;
+	}
+
 	// update now playing
-	if (mappool && id !== data.menu.bm.id) {
+	if (update_stats) {
+		update_stats = false;
+		let map = mappool.find(m => m.beatmap_id === id || m.md5 === md5);
+		await delay(200);
 		id = data.menu.bm.id;
-		let map = mappool.beatmaps.find(m => m.beatmap_id == id);
+		md5 = data.menu.bm.md5;
 		nowplaying.innerHTML = map ? map.identifier : 'XX';
+
+		bpm_ = map?.bpm || data.menu.bm.stats.BPM.max;
+		sr_ = map?.sr || data.menu.bm.stats.fullSR;
+		cs_ = data.menu.bm.stats.CS;
+		cs_base = data.menu.bm.stats.memoryCS;
+		ar_ = data.menu.bm.stats.AR;
+		ar_base = data.menu.bm.stats.memoryAR;
+		od_ = data.menu.bm.stats.OD;
+		od_base = data.menu.bm.stats.memoryOD;
+
+		let mod_ = map?.mods || 'NM';
+		let stats = getModStats(cs_base, ar_base, od_base, 0, mod_);
+
+		console.log({cs_base, ar_base, od_base, stats});
+		bpm.innerHTML = Math.round(bpm_ * 10) / 10;
+		cs.innerHTML = Math.round((mod_ == 'FM' ? cs_base : map ? stats.cs : cs_) * 10) / 10;
+		ar.innerHTML = Math.round((mod_ == 'FM' ? ar_base : map ? stats.ar : ar_) * 10) / 10;
+		od.innerHTML = Math.round((mod_ == 'FM' ? od_base : map ? stats.od : od_) * 10) / 10;
+		sr.innerHTML = sr_.toFixed(2) + '★';
+
+		let length_modifier = map ? (mod_?.includes('DT') ? 1.5 : 1) : data.resultsScreen.mods.str.includes('DT') || data.menu.mods.str.includes('DT') ? 1.5 : 1;
+		len_ = data.menu.bm.time.full - data.menu.bm.time.firstObj;
+		let mins = Math.trunc((len_ / length_modifier) / 1000 / 60);
+		let secs = Math.trunc((len_ / length_modifier) / 1000 % 60);
+		len.innerHTML = `${mins}:${secs.toString().padStart(2, '0')}`;
+
+		if (map?.beatmapset_id && map?.beatmapset_id !== 334460) {
+			image_container.style.backgroundImage = `url('https://assets.ppy.sh/beatmaps/${map?.beatmapset_id}/covers/cover@2x.jpg')`;
+			strain_background.style.backgroundImage = `url('https://assets.ppy.sh/beatmaps/${map?.beatmapset_id}/covers/cover@2x.jpg')`;
+		}
+		else {
+			let path = data.menu.bm.path.full.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/');
+			image_container.style.backgroundImage = `url('http://${location.host}/Songs/${path}')`;
+			strain_background.style.backgroundImage = `url('http://${location.host}/Songs/${path}')`;
+		}
 	}
 
 	// update replayer
@@ -68,14 +113,6 @@ socket.onmessage = async event => {
 		replay.innerHTML = replay_ || '';
 		if (replay_ && state === 2) replay_cont.style.opacity = 1;
 		else replay_cont.style.opacity = 0;
-	}
-
-	// update background image
-	if (image !== data.menu.bm.path.full) {
-		image = data.menu.bm.path.full;
-		data.menu.bm.path.full = data.menu.bm.path.full.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/').replace(/'/g, "\\'");
-		image_container.style.backgroundImage = `url('http://${location.host}/Songs/${data.menu.bm.path.full}')`;
-		strain_background.style.backgroundImage = `url('http://${location.host}/Songs/${data.menu.bm.path.full}')`;
 	}
 
 	// update title
@@ -91,53 +128,14 @@ socket.onmessage = async event => {
 		mapper.innerHTML = data.menu.bm.metadata.mapper;
 	}
 
-	// update map stats
-	if (mappool && (md5 !== data.menu.bm.md5 || (mods !== state2 == 7 ? data.resultsScreen.mods.str : data.menu.mods.str) || state2 !== data.menu.state)) {
-		let map = mappool ? mappool.beatmaps.find(m => m.beatmap_id == data.menu.bm.id) || { id: data.menu.bm.id, mods: 'NM', identifier: '', sr: 0.00 } : { mods: 'NM' };
-		md5 = data.menu.bm.md5;
-		state2 = data.menu.state;
-		mods = state2 == 7 ? data.resultsScreen.mods.str : data.menu.mods.str;
-
-		if (state2 == 7) {
-			stats = getModStats(data.menu.bm.stats.CS, data.menu.bm.stats.AR, data.menu.bm.stats.OD, data.menu.bm.stats.BPM.max, mods);
-			bpm.innerHTML = Math.floor(stats.bpm);
-			sr.innerHTML = map?.sr ? map?.sr + ' ★' || 0.00 : data.menu.bm.stats.fullSR.toFixed(2) + ' ★';
-			cs.innerHTML = stats.cs;
-			ar.innerHTML = stats.ar;
-			od.innerHTML = stats.od;
-		}
-		else {
-			bpm.innerHTML = Math.round(data.menu.bm.stats.BPM.max * 10) / 10;
-			sr.innerHTML = map?.sr && mods.includes(map?.mods) ? map?.sr + ' ★' || 0.00 : data.menu.bm.stats.fullSR.toFixed(2) + ' ★';
-			cs.innerHTML = Math.round(data.menu.bm.stats.CS * 10) / 10;
-			ar.innerHTML = Math.round(data.menu.bm.stats.AR * 10) / 10;
-			od.innerHTML = Math.round(data.menu.bm.stats.OD * 10) / 10;
-		}
-
-		let length_modifier = mods.includes('DT') ? 1.5 : 1;
-		len_ = data.menu.bm.time.full - data.menu.bm.time.firstObj;
-		let mins = Math.trunc((len_ / length_modifier) / 1000 / 60);
-		let secs = Math.trunc((len_ / length_modifier) / 1000 % 60);
-		len.innerHTML = `${mins}:${secs.toString().padStart(2, '0')}`;
-	}
-
-	if (window.strainGraph && strain_seed !== data.menu.pp.strains.length * data.menu.pp.strains[Math.floor(data.menu.pp.strains.length / 2)]) {
-		strain_seed = data.menu.pp.strains.length * data.menu.pp.strains[Math.round(data.menu.pp.strains.length / 2)] || 0;
-		strains = data.menu.pp.strains || null;
-		if (!strains || strains.length < 5) {
-			document.getElementById('strains').style.visibility = 'hidden';
-			document.getElementById('strainsProgress').style.visibility = 'hidden';
-			return;
-		}
-		else {
-			document.getElementById('strains').style.visibility = 'visible';
-			document.getElementById('strainsProgress').style.visibility = 'visible';
-		}
+	// update strains
+	if (strains != JSON.stringify(data.menu.pp.strains) && window.strainGraph) {
+		strains = JSON.stringify(data.menu.pp.strains) || null;
 
 		let temp_strains = smooth(data.menu.pp.strains, 3);
-		new_strains = [];
-		for (let i = 0; i < Math.min(temp_strains.length, 400); i++) {
-			new_strains.push(temp_strains[Math.floor(i * (temp_strains.length / Math.min(temp_strains.length, 400)))]);
+		let new_strains = [];
+		for (let i = 0; i < Math.min(temp_strains.length, 100); i++) {
+			new_strains.push(temp_strains[Math.floor(i * (temp_strains.length / Math.min(temp_strains.length, 100)))]);
 		}
 
 		config.data.datasets[0].data = new_strains;
@@ -152,13 +150,30 @@ socket.onmessage = async event => {
 
 	let now = Date.now();
 	if (fulltime !== data.menu.bm.time.mp3) { fulltime = data.menu.bm.time.mp3; onepart = 1420 / fulltime; }
-	if (seek !== data.menu.bm.time.current && fulltime !== undefined && fulltime != 0 && now - last_strain_update > 100) {
+	if (seek !== data.menu.bm.time.current && fulltime !== undefined && fulltime != 0 && now - last_strain_update > 200) {
 		last_strain_update = now;
 		seek = data.menu.bm.time.current;
 		let maskPosition = `${-1420 + onepart * seek}px 0px`;
 		progressChart.style.maskPosition = maskPosition;
 		progressChart.style.webkitMaskPosition = maskPosition;
 	}
+}
+
+const delay = async time => new Promise(resolve => setTimeout(resolve, time));
+
+const getModStats = (cs_raw, ar_raw, od_raw, hp_raw, mods) => {
+	let speed = mods.includes('DT') ? 1.5 : mods.includes('HT') ? 0.75 : 1;
+	let ar = mods.includes('HR') ? ar_raw * 1.4 : mods.includes('EZ') ? ar_raw * 0.5 : ar_raw;
+	let ar_ms = Math.max(Math.min(ar <= 5 ? 1800 - 120 * ar : 1200 - 150 * (ar - 5), 1800), 450) / speed;
+	ar = ar_ms > 1200 ? (1800 - ar_ms) / 120 : 5 + (1200 - ar_ms) / 150;
+
+	let cs = Math.min(mods.includes('HR') ? cs_raw * 1.3 : mods.includes('EZ') ? cs_raw * 0.5 : cs_raw, 10);
+	let hp = Math.min(mods.includes('HR') ? hp_raw * 1.4 : mods.includes('EZ') ? hp_raw * 0.5 : hp_raw, 10);
+
+	let od = mods.includes('HR') ? Math.min(od_raw * 1.4, 10) : mods.includes('EZ') ? od_raw * 0.5 : od_raw;
+	od = Math.min((79.5 - (Math.min(79.5, Math.max(19.5, 79.5 - Math.ceil(6 * od))) / speed)) / 6, speed > 1.5 ? 12 : 11);
+
+	return { cs, ar, od, hp, ar_ms }
 }
 
 window.onload = function () {
@@ -174,8 +189,9 @@ let config = {
 	data: {
 		labels: [],
 		datasets: [{
-			borderColor: 'rgba(5, 5, 5, 0)',
-			backgroundColor: 'rgba(255, 255, 255, 0.1)',
+			borderColor: 'rgba(200, 200, 200, 0)',
+			borderWidth: 1,
+			backgroundColor: 'rgba(255, 255, 255, 0.06)',
 			data: [],
 			fill: true,
 		}]
@@ -202,8 +218,8 @@ let configProgress = {
 	data: {
 		labels: [],
 		datasets: [{
-			borderColor: 'rgba(245, 245, 245, 0)',
-			backgroundColor: 'rgba(255, 255, 255, 0.1)',
+			borderColor: 'rgba(70, 100, 70, 0)',
+			backgroundColor: 'rgba(200, 200, 200, 0.1)',
 			data: [],
 			fill: true,
 		}]
@@ -222,29 +238,5 @@ let configProgress = {
 			}
 		},
 		animation: { duration: 0 }
-	}
-}
-
-const getModStats = (cs_raw, ar_raw, od_raw, bpm_raw, mods) => {
-	mods = mods.replace('NC', 'DT');
-	mods = mods.replace('FM', 'HR');
-
-	let speed = mods.includes('DT') ? 1.5 : mods.includes('HT') ? 0.75 : 1;
-	let ar = mods.includes('HR') ? ar_raw * 1.4 : mods.includes('EZ') ? ar_raw * 0.5 : ar_raw;
-
-	let ar_ms = Math.max(Math.min(ar <= 5 ? 1800 - 120 * ar : 1200 - 150 * (ar - 5), 1800), 450) / speed;
-	ar = ar <= 5 ? (1800 - ar_ms) / 120 : 5 + (1200 - ar_ms) / 150;
-
-	let cs = Math.round(Math.min(mods.includes('HR') ? cs_raw * 1.3 : mods.includes('EZ') ? cs_raw * 0.5 : cs_raw, 10) * 10) / 10;
-
-	let od = mods.includes('HR') ? od_raw * 1.4 : mods.includes('EZ') ? od_raw * 0.5 : od_raw;
-	od = Math.round(Math.min((79.5 - Math.min(79.5, Math.max(19.5, 79.5 - Math.ceil(6 * od))) / speed) / 6, 11) * 10) / 10;
-
-	return {
-		cs: Math.round(cs * 10) / 10,
-		ar: Math.round(ar * 10) / 10,
-		od: Math.round(od * 10) / 10,
-		bpm: Math.round(bpm_raw * speed * 10) / 10,
-		speed
 	}
 }

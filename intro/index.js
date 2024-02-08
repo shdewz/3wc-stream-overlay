@@ -4,7 +4,7 @@ let comingup, teams, mappool;
 	comingup = await $.getJSON('../_data/coming_up.json');
 	teams = await $.getJSON('../_data/teams.json');
 	mappool = await $.getJSON('../_data/beatmaps.json');
-	document.getElementById('stage').innerHTML = mappool.stage.toUpperCase();
+	document.getElementById('stage-name').innerHTML = mappool.stage.toUpperCase();
 
 	let timer_end = comingup.time - 0 * 60 * 60 * 1000;
 	if (timer_end > Date.now()) {

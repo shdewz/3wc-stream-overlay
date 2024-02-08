@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'Mont';
+    src: url('../_shared/fonts/Mont-SemiBold.otf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Mont';
+    src: url('../_shared/fonts/Mont-Bold.otf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Din';
+    src: url('../_shared/fonts/D-DIN.otf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Din';
+    src: url('../_shared/fonts/D-DIN-Italic.otf');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Din';
+    src: url('../_shared/fonts/D-DIN-Bold.otf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Helvetica Now';
+    src: url('../_shared/fonts/HelveticaNowText-Medium.otf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Helvetica Now';
+    src: url('../_shared/fonts/HelveticaNowText-Bold.otf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Helvetica Now';
+    src: url('../_shared/fonts/HelveticaNowText-Black.otf');
+    font-weight: 700;
+}
+
+:root {
+    --accent: #7ce07c;
+    --accent-faded: #ace2ac;
+    --accent-bg: #6dd46d;
+    --dark: #252525;
+    --dark-light: #818181;
+    --light: #fcfcfc;
+    --accent-mod-nm: #759de7;
+    --accent-mod-hd: #eec875;
+    --accent-mod-hr: #e97777;
+    --accent-mod-dt: #ad73db;
+    --accent-mod-fm: #85e285;
+    --accent-mod-tb: #61cfc1;
+    --red: #ff8d8d;
+    --blue: #93b5ff;
+}

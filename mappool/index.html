@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="deps/reconnecting-websocket.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../_shared/common.css">
+    <script src="../_shared/deps/jquery.min.js""></script>
+    <script src="../_shared/deps/reconnecting-websocket.min.js"></script>
 </head>
 
 <body>
@@ -18,6 +19,12 @@
             <div id="FM" class="mapContainer"></div>
             <div id="TB" class="mapContainer"></div>
         </div>
+    </div>
+    <div id="controls">
+        <div id="redPickButton" class="pickButton">RED PICK</div>
+        <div id="bluePickButton" class="pickButton">BLUE PICK</div>
+        <div id="switchPickButton" class="pickButton switchPickButton" onclick="switchPick()">SWITCH PICK</div>
+        <div id="autoPickButton" class="pickButton switchPickButton" onclick="switchAutoPick()">ENABLE AUTOPICK</div>
     </div>
     <script src="index.js"></script>
 </body>

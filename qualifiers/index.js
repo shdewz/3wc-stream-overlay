@@ -1,9 +1,9 @@
-let teams, beatmaps;
+let data, beatmaps;
 (async () => {
 	$.ajaxSetup({ cache: false });
-	teams = (await $.getJSON('teams.json'));
-	beatmaps = (await $.getJSON('beatmaps.json'));
-	last_team_seed = teams.length;
+	data = (await $.getJSON('q_data.json'));
+	beatmaps = (await $.getJSON('../_data/beatmaps.json'));
+	last_team_seed = data.length;
 	init();
 })();
 
@@ -14,6 +14,10 @@ const first_team = () => { seed = 1; update(); }
 const prev_team = () => { seed = Math.max(1, seed - 1); update(); }
 const next_team = () => { seed = Math.min(last_team_seed, seed + 1); update(); }
 const last_team = () => { seed = last_team_seed; update(); }
+const toggle = () => {
+	if ($('#middle').css('opacity') == 1) $('#middle').css('opacity', 0);
+	else $('#middle').css('opacity', 1);
+}
 const reload = () => { update(); }
 
 const init = () => {
@@ -32,16 +36,16 @@ const init = () => {
 
 const update = () => {
 	$('#current-seed').html(`Seed ${seed}`);
-	let team = teams.find(t => t.seed == seed);
+	let team = data.find(t => t.seed == seed);
 	if (!team) team = empty_team;
 
 	$('#current-team').html(team.team);
 
-	$('#team-stats-seed').html(`#${team.seed}`);
-	$('#team-stats-lastyear').html(team.last_year);
+	$('#team-stats-seed').html(`${team.seed}`);
+	$('#team-stats-lastyear').html(team?.last_year ? `Seed ${team?.last_year}` : 'DNP');
 	$('#team-stats-placement').html(team.placement);
 	$('#team-name').html(team.team);
-	$('#flag').css('background-image', `url(https://assets.ppy.sh/old-flags/${team.flag}.png)`);
+	$('#flag').css('background-image', `url(${team.flag_url})`);
 
 	for (let i = 0; i < 6; i++) {
 		if (i >= team.players.length || team.seed == 0) {
@@ -50,19 +54,21 @@ const update = () => {
 		}
 		else {
 			$(`#p${i + 1}-name`).html(team.players[i].username);
-			$(`#p${i + 1}-rank`).html(`#${team.players[i].rank}`);
+			if (team.players[i].rank == -1) $(`#p${i + 1}-rank`).html('');
+			else $(`#p${i + 1}-rank`).html(`<span class="prank">#${team.players[i].rank}</span> ${team.players[i].pscore.toFixed(2)}`);
 		}
 	}
 
-	const maps = beatmaps.beatmaps;
-	for (let i = 0; i < maps.length; i++) {
-		let map = maps[i];
-		let sc = team.maps[i];
-		for (let j = 0; j < 6; j++) {
-			$(`#${map.identifier.toLowerCase()}-score-${j}`).html(sc.scores[j] == 0 ? '–' : sc.scores[j]?.toLocaleString() || '');
+	for (let map of team.maps) {
+		for (let i = 0; i < 6; i++) {
+			if (!team.players[i]) $(`#${map.identifier.toLowerCase()}-score-${i}`).html('–');
+			else {
+				let score = map.scores.find(s => s.username == team.players[i].username);
+				$(`#${map.identifier.toLowerCase()}-score-${i}`).html(score ? score.score.toLocaleString() : '–');
+			}
 		}
-		$(`#${map.identifier.toLowerCase()}-bottomscore-0`).html(sc.totals[0] == 0 ? '–' : sc.totals[0]?.toLocaleString() || '–');
-		$(`#${map.identifier.toLowerCase()}-bottomscore-1`).html(sc.totals[1] == 0 ? '–' : `#${sc.totals[1]?.toLocaleString()}` || '–');
+		$(`#${map.identifier.toLowerCase()}-bottomscore-0`).html(map?.total ? map.total.toLocaleString() : '–');
+		$(`#${map.identifier.toLowerCase()}-bottomscore-1`).html(map?.rank ? `#${map.rank.toLocaleString()}` : '–');
 	}
 }
 
@@ -123,29 +129,23 @@ class Beatmap {
 }
 
 const empty_team = {
-	"seed": 0,
-	"team": "",
-	"flag": "",
-	"last_year": "",
-	"placement": "",
-	"players": [
-		{ "username": "", "rank": 0 },
-		{ "username": "", "rank": 0 },
-		{ "username": "", "rank": 0 },
-		{ "username": "", "rank": 0 },
-		{ "username": "", "rank": 0 },
-		{ "username": "", "rank": 0 }
-	],
-	"maps": [
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] },
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] },
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] },
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] },
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] },
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] },
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] },
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] },
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] },
-		{ "scores": [0, 0, 0, 0, 0, 0], "totals": [0, 0] }
+	seed: 0,
+	team: '',
+	flag: 'XX',
+	flag_url: 'https://assets.ppy.sh/old-flags/XX.png',
+	last_year: '',
+	placement: '',
+	players: [],
+	maps: [
+		{ identifier: 'NM1', scores: [] },
+		{ identifier: 'NM2', scores: [] },
+		{ identifier: 'NM3', scores: [] },
+		{ identifier: 'NM4', scores: [] },
+		{ identifier: 'HD1', scores: [] },
+		{ identifier: 'HD2', scores: [] },
+		{ identifier: 'HR1', scores: [] },
+		{ identifier: 'HR2', scores: [] },
+		{ identifier: 'DT1', scores: [] },
+		{ identifier: 'DT2', scores: [] }
 	]
 }

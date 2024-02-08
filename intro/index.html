@@ -3,22 +3,28 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="css/style.css?t=<?php echo time()?>">
-	<script src="deps/countUp.js"></script>
-	<script src="deps/reconnecting-websocket.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="style.css?t=<?php echo time()?>">
+	<link rel="stylesheet" href="../_shared/common.css">
+	<script src="../_shared/deps/countUp.js"></script>
+	<script src="../_shared/deps/reconnecting-websocket.min.js"></script>
+	<script src="../_shared/deps/jquery.min.js"></script>
 </head>
 
 <body>
 	<div id="main">
 		<video autoplay muted loop id="bg-video">
-			<source src="./static/bg.mp4" type="video/mp4">
+			<source src="../_shared/assets/background.mp4" type="video/mp4">
 		</video>
 		<div id="full-overlay">
-			<div id="stage-container">
-				<div id="stage"></div>
+			<div id="header-container">
+				<div id="logo-container"><img src="../_shared/assets/icon_round.png" id="logo"></div>
+				<div id="title-stage-container">
+					<div id="logotext">3 DIGIT WORLD CUP</div>
+					<div id="stage-name">-</div>
+				</div>
 			</div>
 			<div id="coming-up">
+				<div id="comingup-title">COMING UP IN</div>
 				<div id="timer">00:00</div>
 				<!-- <h3 id="time">00:00 UTC</h3> -->
 			</div>

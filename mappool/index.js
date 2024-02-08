@@ -11,41 +11,24 @@ let mapInfo = document.getElementById('mapInfo');
 let mapper = document.getElementById('mapper');
 let stars = document.getElementById('stars');
 let stats = document.getElementById('stats');
+let red_button = document.getElementById('redPickButton');
+let blue_button = document.getElementById('bluePickButton');
+let autopick_button = document.getElementById('autoPickButton');
 
-const beatmaps = new Set(); // Store beatmapID;
-const load_maps = async () => await $.getJSON('../_data/beatmap_data.json');
+const beatmaps = new Set();
 
-socket.onopen = async () => {
-    console.log('Successfully Connected');
-};
-
-socket.onclose = (event) => {
-    console.log('Socket Closed Connection: ', event);
-    socket.send('Client Closed!');
-};
-
-socket.onerror = (error) => {
-    console.log('Socket Error: ', error);
-};
-
-let tempMapID, tempImg, tempMapArtist, tempMapTitle, tempMapDiff, tempMapper;
-
-let tempSR, tempCS, tempAR, tempOD, tempHP;
+socket.onopen = () => { console.log('Successfully Connected'); };
+socket.onclose = event => { console.log('Socket Closed Connection: ', event); socket.send('Client Closed!'); };
+socket.onerror = error => { console.log('Socket Error: ', error); };
 
 let gameState;
-
 let hasSetup = false;
-
+let lastPicked = null;
 let redName = 'Red Team', blueName = 'Blue Team';
-
-const mods = {
-    NM: 0,
-    HD: 1,
-    HR: 2,
-    DT: 3,
-    FM: 4,
-    TB: 5,
-};
+let tempMapID = 0;
+let currentPicker = 'Red';
+let enableAutoPick = false;
+let selectedMaps = [];
 
 class Beatmap {
     constructor(mods, modID, beatmapID, layerName) {
@@ -125,89 +108,29 @@ socket.onmessage = async (event) => {
         redName = data.tourney.manager.teamName.left || 'Red';
     }
 
-    if (tempImg !== data.menu.bm.path.full) {
-        tempImg = data.menu.bm.path.full;
-        data.menu.bm.path.full = data.menu.bm.path.full.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/');
-    }
-    if (tempMapID !== data.menu.bm.id || tempSR !== data.menu.bm.stats.fullSR) {
-        tempMapID = data.menu.bm.id;
-        tempMapArtist = data.menu.bm.metadata.artist;
-        tempMapTitle = data.menu.bm.metadata.title;
-        tempMapDiff = '[' + data.menu.bm.metadata.difficulty + ']';
-        tempMapper = data.menu.bm.metadata.mapper;
-
-        tempCS = data.menu.bm.stats.CS;
-        tempAR = data.menu.bm.stats.AR;
-        tempOD = data.menu.bm.stats.OD;
-        tempHP = data.menu.bm.stats.HP;
-        tempSR = data.menu.bm.stats.fullSR;
+    if (tempMapID !== data.menu.bm.id && data.menu.bm.id != 0) {
+        if (tempMapID == 0) tempMapID = data.menu.bm.id;
+        else {
+            tempMapID = data.menu.bm.id;
+            let pickedMap = Array.from(beatmaps).find(b => b.beatmapID == tempMapID);
+            if (pickedMap && enableAutoPick && !selectedMaps.includes(tempMapID)) pickMap(Array.from(beatmaps).find(b => b.beatmapID == tempMapID), currentPicker == 'Red' ? redName : blueName, currentPicker);
+        }
     }
 };
 
 async function setupBeatmaps() {
     hasSetup = true;
-    let lastPicked = null;
-
-    const modsCount = {
-        NM: 0,
-        HD: 0,
-        HR: 0,
-        DT: 0,
-        FM: 0,
-        TB: 0,
-    };
 
     const bms = [];
     try {
         $.ajaxSetup({ cache: false });
         const jsonData = await $.getJSON(`../_data/beatmaps.json`);
-        console.log(jsonData.beatmaps.map(b => b.beatmap_id));
-        jsonData.beatmaps.map((beatmap) => {
-            bms.push(beatmap);
-        });
-    } catch (error) {
-        console.error('Could not read JSON file', error);
-    }
-
-    (function countMods() {
-        bms.map((beatmap) => {
-            modsCount[beatmap.mods]++;
-        });
-    })();
+        jsonData.beatmaps.map((beatmap) => { bms.push(beatmap); });
+    } catch (error) { console.error('Could not read JSON file', error); }
 
     let row = -1;
     let preMod = 0;
     let colIndex = 0;
-
-    function setPickedMap(bm, event) {
-        if (lastPicked !== null) {
-            lastPicked.blinkoverlay.style.animation = 'none';
-        }
-        lastPicked = bm;
-        bm.pickedStatus.style.color = '#f5f5f5';
-        bm.overlay.style.opacity = event.ctrlKey ? '0.95' : '0.85';
-        bm.blinkoverlay.style.animation = event.ctrlKey
-            ? 'none'
-            : 'blinker 1s cubic-bezier(.36,.06,.01,.57) 300ms 8, slowPulse 5000ms ease-in-out 8000ms 18'; // 36 * 5s -> 180s of slow pulse (+8s), enough to run down 120s countdown but short enough to reset before next time mappool is shown
-        bm.artist.style.opacity = '0.3';
-        bm.title.style.opacity = '0.3';
-        bm.difficulty.style.opacity = '0.3';
-        bm.modIcon.style.opacity = '0.3';
-        bm.bg.style.opacity = '0';
-    }
-
-    function resetMapPick(bm) {
-        bm.overlay.style.opacity = '0.5';
-        bm.blinkoverlay.style.animation = 'none';
-        bm.artist.style.opacity = '1';
-        bm.title.style.opacity = '1';
-        bm.difficulty.style.opacity = '1';
-        bm.modIcon.style.opacity = '1';
-        bm.bg.style.opacity = '1';
-        bm.pickedStatus.style.opacity = '0';
-        bm.pickedStatus.style.boxShadow = 'none';
-        bm.pickedStatus.style.outline = 'none';
-    }
 
     bms.map(async (beatmap, index) => {
         if (beatmap.mods !== preMod || colIndex % 3 === 0) {
@@ -215,59 +138,115 @@ async function setupBeatmaps() {
             colIndex = 0;
             row++;
         }
-        let oddRow = Math.round(modsCount[beatmap.mods] / 3) + 1;
-        let leftCol = modsCount[beatmap.mods] % 3;
         const bm = new Beatmap(beatmap.mods, beatmap.identifier, beatmap.beatmap_id, `map${index}`);
         bm.generate();
-        bm.clicker.addEventListener('mousedown', function () {
-            bm.clicker.addEventListener('click', function (event) {
-                if (!event.shiftKey) {
-                    setPickedMap(bm, event);
-                    document.cookie = `lastPick=${bm.beatmapID}-red;path=/`;
-                    setTimeout(function () {
-                        bm.pickedStatus.style.opacity = '1';
-                        bm.pickedStatus.style.outline = bm.mods.includes("TB") ? "3px solid #FFF" : event.ctrlKey ? 'none' : '3px solid #ff8d8d';
-                        bm.pickedStatus.innerHTML = bm.mods.includes("TB") ? "Tiebreaker" : event.ctrlKey ? `<b class="pickRed">${redName}</b> ban` : `<b class="pickRed">${redName}</b> pick`;
-                    }, 300);
-                } else {
-                    resetMapPick(bm);
-                    document.cookie = `lastPick=;path=/`;
-                    setTimeout(function () {
-                        bm.pickedStatus.style.opacity = '1';
-                        bm.pickedStatus.innerHTML = '';
-                    }, 300);
-                }
+        bm.clicker.addEventListener('mousedown', () => {
+            bm.clicker.addEventListener('click', event => {
+                if (!event.shiftKey) event.ctrlKey ? banMap(bm, redName, 'Red') : pickMap(bm, redName, 'Red');
+                else resetMap(bm);
             });
-            bm.clicker.addEventListener('contextmenu', function (event) {
-                if (!event.shiftKey) {
-                    setPickedMap(bm, event);
-                    document.cookie = `lastPick=${bm.beatmapID}-blue;path=/`;
-                    setTimeout(function () {
-                        bm.pickedStatus.style.opacity = '1';
-                        bm.pickedStatus.style.outline = bm.mods.includes("TB") ? "3px solid #FFF" : event.ctrlKey ? 'none' : '3px solid #93b5ff';
-                        bm.pickedStatus.innerHTML = bm.mods.includes("TB") ? "Tiebreaker" : event.ctrlKey ? `<b class="pickBlue">${blueName}</b> ban` : `<b class="pickBlue">${blueName}</b> pick`;
-                    }, 150);
-                } else {
-                    resetMapPick(bm);
-                    document.cookie = `lastPick=;path=/`;
-                    setTimeout(function () {
-                        bm.pickedStatus.style.opacity = '1';
-                        bm.pickedStatus.innerHTML = '';
-                    }, 150);
-                }
+            bm.clicker.addEventListener('contextmenu', event => {
+                if (!event.shiftKey) event.ctrlKey ? banMap(bm, blueName, 'Blue') : pickMap(bm, blueName, 'Blue');
+                else resetMap(bm);
             });
         });
-        const stored_beatmaps = await load_maps();
-        const mapData = await getDataSet(stored_beatmaps, beatmap.beatmap_id);
-        bm.map.style.backgroundImage = `url('https://assets.ppy.sh/beatmaps/${mapData.beatmapset_id}/covers/cover.jpg')`;
-        bm.artist.innerHTML = `${mapData.artist}`;
-        bm.title.innerHTML = `${mapData.title}`;
-        bm.difficulty.innerHTML = `[${mapData.version}] by ${mapData.creator}`;
+        bm.map.style.backgroundImage = `url('https://assets.ppy.sh/beatmaps/${beatmap.beatmapset_id}/covers/cover.jpg')`;
+        bm.artist.innerHTML = `${beatmap.artist}`;
+        bm.title.innerHTML = `${beatmap.title}`;
+        bm.difficulty.innerHTML = `[${beatmap.difficulty}] by ${beatmap.creator || ''}`;
         beatmaps.add(bm);
     });
 }
 
-function getDataSet(stored_beatmaps, beatmap_id) {
-    let beatmap = stored_beatmaps.find(b => b.beatmap_id == beatmap_id);
-    return beatmap || null;
-};
+const getDataSet = (stored_beatmaps, beatmap_id) => stored_beatmaps.find(b => b.beatmap_id == beatmap_id) || null;
+
+const pickMap = (bm, teamName, color) => {
+    if (lastPicked !== null) lastPicked.blinkoverlay.style.animation = 'none';
+    lastPicked = bm;
+    switchPick(color);
+
+    document.cookie = `lastPick=${bm.beatmapID}-${color.toLowerCase()};path=/`;
+
+    bm.pickedStatus.style.color = '#f5f5f5';
+    bm.overlay.style.opacity = '0.85';
+    bm.blinkoverlay.style.animation = 'blinker 1s cubic-bezier(.36,.06,.01,.57) 300ms 8, slowPulse 5000ms ease-in-out 8000ms 18';
+    bm.artist.style.opacity = '0.3';
+    bm.title.style.opacity = '0.3';
+    bm.difficulty.style.opacity = '0.3';
+    bm.modIcon.style.opacity = '0.3';
+    bm.bg.style.opacity = '0';
+    selectedMaps.push(bm.beatmapID);
+
+    setTimeout(() => {
+        bm.pickedStatus.style.opacity = 1;
+        bm.pickedStatus.style.outline = bm.mods.includes('TB') ? '3px solid #ffffff' : `3px solid ${color == 'Red' ? '#ff8d8d' : '#93b5ff'}`;
+        bm.pickedStatus.innerHTML = bm.mods.includes('TB') ? 'Tiebreaker' : `<b class="pick${color}">${teamName}</b> pick`;
+    }, 300);
+}
+
+const banMap = (bm, teamName, color) => {
+    if (bm.mods.includes('TB')) return;
+    bm.pickedStatus.style.color = '#f5f5f5';
+    bm.overlay.style.opacity = '0.95';
+    bm.blinkoverlay.style.animation = 'none';
+    bm.artist.style.opacity = '0.3';
+    bm.title.style.opacity = '0.3';
+    bm.difficulty.style.opacity = '0.3';
+    bm.modIcon.style.opacity = '0.3';
+    bm.bg.style.opacity = '0';
+    selectedMaps.push(bm.beatmapID);
+
+    setTimeout(() => {
+        bm.pickedStatus.style.opacity = 1;
+        bm.pickedStatus.style.outline = 'none';
+        bm.pickedStatus.innerHTML = `<b class="pick${color}">${teamName}</b> ban`;
+    }, 300);
+}
+
+const resetMap = bm => {
+    document.cookie = `lastPick=;path=/`;
+
+    bm.overlay.style.opacity = '0.6';
+    bm.blinkoverlay.style.animation = 'none';
+    bm.artist.style.opacity = '0.8';
+    bm.title.style.opacity = '1';
+    bm.difficulty.style.opacity = '0.8';
+    bm.modIcon.style.opacity = '1';
+    bm.bg.style.opacity = '1';
+    bm.pickedStatus.style.opacity = '0';
+    bm.pickedStatus.style.boxShadow = 'none';
+    bm.pickedStatus.style.outline = 'none';
+    selectedMaps = selectedMaps.filter(e => e !== bm.beatmapID);
+
+    setTimeout(() => {
+        bm.pickedStatus.style.opacity = 0;
+        bm.pickedStatus.style.outline = 'none';
+        bm.pickedStatus.innerHTML = '';
+    }, 100);
+}
+
+const switchPick = color => {
+    if (!color) currentPicker = currentPicker == 'Red' ? 'Blue' : 'Red';
+    else currentPicker = color == 'Red' ? 'Blue' : 'Red';
+    if (currentPicker == 'Red') {
+        red_button.style.opacity = 1;
+        blue_button.style.opacity = 0.5;
+    }
+    else {
+        red_button.style.opacity = 0.5;
+        blue_button.style.opacity = 1;
+    }
+}
+
+const switchAutoPick = () => {
+    if (enableAutoPick) {
+        enableAutoPick = false;
+        autopick_button.innerHTML = 'ENABLE AUTOPICK';
+        autopick_button.style.backgroundColor = '#fc9f9f';
+    }
+    else {
+        enableAutoPick = true;
+        autopick_button.innerHTML = 'DISABLE AUTOPICK';
+        autopick_button.style.backgroundColor = '#9ffcb3';
+    }
+}

@@ -1,2 +1,3 @@
 _data/
-qualifiers/*.json
+qualifiers/
+_shared/assets/qualis_bg.png

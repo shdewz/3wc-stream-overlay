@@ -3,34 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css?t=<?php echo time()?>">
-    <script src="deps/countUp.js"></script>
-    <script src="deps/reconnecting-websocket.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="deps/Chart.min.js"></script>
-    <script src="deps/smooth.js"></script>
+    <link rel="stylesheet" href="style.css?t=<?php echo time()?>">
+    <link rel="stylesheet" href="../_shared/common.css">
+    <script src="../_shared/deps/countUp.js"></script>
+    <script src="../_shared/deps/reconnecting-websocket.min.js"></script>
+    <script src="../_shared/deps/jquery.min.js"></script>
+    <script src="../_shared/deps/Chart.min.js"></script>
+    <script src="../_shared/deps/smooth.js"></script>
 </head>
 
 <body>
     <div id="main">
         <video autoplay muted loop id="bg-video">
-			<source src="./static/bg.mp4" type="video/mp4">
-		</video>
+            <source src="../_shared/assets/background.mp4" type="video/mp4">
+        </video>
         <div id="full-overlay">
             <div id="header">
                 <div id="red-points"></div>
                 <div id="blue-points"></div>
-                <div id="red-name">Red Team</div>
+                <div id="red-name">United States</div>
                 <div id="blue-name">Blue Team</div>
                 <div id="red-bar"></div>
                 <div id="blue-bar"></div>
-                <img id="red-flag">
-                <img id="blue-flag">
-                <div id="logo">3 DIGIT WORLD CUP</div>
-                <div id="stage-outer-container">
-                    <div id="stage-container">
-                        <div id="stage-name">-</div>
-                    </div>
+                <img id="red-flag" src="https://assets.ppy.sh/old-flags/XX.png">
+                <img id="blue-flag" src="https://assets.ppy.sh/old-flags/XX.png">
+                <div id="header-container">
+                    <div id="logo-container"><img src="../_shared/assets/icon_round.png" id="logo"></div>
+                    <div id="title-stage-container"><div id="logotext">3 DIGIT WORLD CUP</div><div id="stage-name">-</div></div>
                 </div>
             </div>
             <div id="gameplay-area"></div>
@@ -39,10 +38,12 @@
                     <div id="lead-bar"></div>
                     <div id="score-red">0</div>
                     <div id="score-blue">0</div>
+                    <div id="scorediff">0</div>
                 </div>
                 <div id="bottom-footer">
                     <div id="mapimage-container">
-                        <img id="picked-by-flag"><p id="picked-by-label">PICK</p>
+                        <img id="picked-by-flag">
+                        <p id="picked-by-label">PICK</p>
                     </div>
                     <div id="stats-container">
                         <div id="strain-container">

@@ -19,16 +19,16 @@ socket.onmessage = event => {
 		tempMapName = `${data.menu.bm.metadata.artist} - <b>${data.menu.bm.metadata.title}</b>`;
 		title.innerHTML = `<span id="note">♪</span> ${tempMapName}`;
 	}
-
-	if (desc.innerHTML.toLowerCase() == 'hide') { desc.style.opacity = 0; }
-	else desc.style.opacity = 1;
 }
+
+let width = 180;
+let height = 180;
 
 let box = document.getElementById('dvd'),
 	xMin = 1220,
 	yMin = -1080,
-	xMax = 1714,
-	yMax = -180,
+	xMax = 1920 - width,
+	yMax = -height,
 	translateX = 1300,
 	translateY = -900,
 	request = null,

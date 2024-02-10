@@ -153,7 +153,7 @@ async function setupBeatmaps() {
         bm.map.style.backgroundImage = `url('https://assets.ppy.sh/beatmaps/${beatmap.beatmapset_id}/covers/cover.jpg')`;
         bm.artist.innerHTML = `${beatmap.artist}`;
         bm.title.innerHTML = `${beatmap.title}`;
-        bm.difficulty.innerHTML = `[${beatmap.difficulty}] by ${beatmap.creator || ''}`;
+        bm.difficulty.innerHTML = `[${beatmap.difficulty}]${beatmap.mapper? ` by ${beatmap.mapper || '' }` : ''}`;
         beatmaps.add(bm);
     });
 }

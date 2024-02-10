@@ -27,7 +27,7 @@ socket.onmessage = event => {
 	}
 
 	if (teams && (points_r !== data.tourney.manager.stars.left || points_b !== data.tourney.manager.stars.right)) {
-		points_r = data.tourney.manager.stars.left + 1;
+		points_r = data.tourney.manager.stars.left;
 		points_b = data.tourney.manager.stars.right;
 		let red = teams.find(t => t.name === data.tourney.manager.teamName.left);
 		let blue = teams.find(t => t.name === data.tourney.manager.teamName.right);

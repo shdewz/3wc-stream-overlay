@@ -2,7 +2,7 @@ let mappool, teams;
 (async () => {
 	$.ajaxSetup({ cache: false });
 	mappool = await $.getJSON('../_data/beatmaps.json');
-	// teams = await $.getJSON('../_data/teams.json');
+	teams = await $.getJSON('../_data/teams.json');
 	document.getElementById('stage-name').innerHTML = mappool.stage.toUpperCase();
 })();
 

@@ -11,6 +11,7 @@
 
 <sup>*url from discord, replace custom css with [vc.css](vc.css)</sup><br>
 <sup>**place in the standard "triangle" 3v3 configuration as shown below</sup>
+
 | client | x    | y    |
 |--------|------|------|
 | 0      | 240  | 160  |
@@ -21,13 +22,17 @@
 | 5      | 1440 | 520  |
 
 ### mappool
-| source           | url/path                                           | width | height | x | y   |
-|------------------|----------------------------------------------------|-------|--------|---|-----|
-| vc_overlay       |                                                    | 480   | 100    | 0 | 880 |
-| mappool_overlay* | http://localhost:24050/3wc-stream-overlay/mappool/ | 1920  | 700    | 0 | 220 |
-| main_overlay     | http://localhost:24050/3wc-stream-overlay/main/    | 1920  | 1080   | 0 | 0   |
+| source             | url/path                                           | width | height | x | y   |
+|--------------------|----------------------------------------------------|-------|--------|---|-----|
+| vc_overlay         |                                                    | 480   | 100    | 0 | 880 |
+| mappool_overlay*†  | http://localhost:24050/3wc-stream-overlay/mappool/ | 1920  | 700    | 0 | 220 |
+| main_overlay       | http://localhost:24050/3wc-stream-overlay/main/    | 1920  | 1080   | 0 | 0   |
 
-<sup>*position changes per round depending on mappool size to center in the middle</sup>
+<sup>*: position changes per round depending on mappool size to center in the middle</sup>
+#### !!!! IMPORTANT !!!!
+For scene autoswitcher to work, you must give the `mappool_overlay` web source "Advanced access to OBS" 
+_as well as_ making a copy of the `mappool_overlay` web source to every other scene. The copies should be
+positioned off-screen as to not appear on stream.
 
 ### intro*
 | source           | url/path                                           | width | height | x | y   |

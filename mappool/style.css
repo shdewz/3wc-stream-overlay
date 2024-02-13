@@ -274,8 +274,9 @@ html {
 }
 
 .controlLabel {
-    color: #aaaaaa;
-    font-size: 18px;
+    color: #bfbfbf;
+    font-size: 20px;
+    font-family: sans-serif;
 }
 
 .sceneButton {

@@ -243,20 +243,24 @@ const pickMap = (bm, teamName, color) => {
     }, 300);
 
     if (enableAutoAdvance) {
-        if (Object.hasOwn(selectedMapsTransitionTimeout, bm.beatmapID)) {
-            clearTimeout(selectedMapsTransitionTimeout[bm.beatmapID]);
-        }
-        selectedMapsTransitionTimeout[bm.beatmapID] = setTimeout(() => {
-            obsSetCurrentScene(gameplay_scene_name);
-            autoadvance_timer_container.style.opacity = '0';
-        }, pick_to_transition_delay_ms);
+        // idempotent on pick color (none/red/blue). Consider making it idempotent on pick state? (not picked/picked)
+        if (selectedMapsTransitionTimeout[bm.beatmapID]?.color !== color) {
+            clearTimeout(selectedMapsTransitionTimeout[bm.beatmapID]?.timeoutId)
+            selectedMapsTransitionTimeout[bm.beatmapID] = {
+                color: color,
+                timeoutId: setTimeout(() => {
+                    obsSetCurrentScene(gameplay_scene_name);
+                    autoadvance_timer_container.style.opacity = '0';
+                }, pick_to_transition_delay_ms)
+            };
 
-        autoadvance_timer_time = new CountUp('autoAdvanceTimerTime',
-            pick_to_transition_delay_ms/1000, 0, 1, pick_to_transition_delay_ms/1000,
-            {useEasing: false, suffix: 's'});
-        autoadvance_timer_time.start();
-        autoadvance_timer_container.style.opacity = '1';
-        autoadvance_timer_label.textContent = `Switching to ${gameplay_scene_name} in`;
+            autoadvance_timer_time = new CountUp('autoAdvanceTimerTime',
+                pick_to_transition_delay_ms/1000, 0, 1, pick_to_transition_delay_ms/1000,
+                {useEasing: false, suffix: 's'});
+            autoadvance_timer_time.start();
+            autoadvance_timer_container.style.opacity = '1';
+            autoadvance_timer_label.textContent = `Switching to ${gameplay_scene_name} in`;
+        }
     }
 }
 
@@ -280,7 +284,7 @@ const banMap = (bm, teamName, color) => {
 }
 
 const resetMap = bm => {
-    clearTimeout(selectedMapsTransitionTimeout[bm.beatmapID]);
+    clearTimeout(selectedMapsTransitionTimeout[bm.beatmapID]?.timeoutId);
     autoadvance_timer_container.style.opacity = '0';
 
     document.cookie = `lastPick=;path=/`;

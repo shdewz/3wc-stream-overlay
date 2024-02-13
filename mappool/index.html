@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../_shared/common.css">
-    <script src="../_shared/deps/jquery.min.js""></script>
+    <script src="../_shared/deps/jquery.min.js"></script>
     <script src="../_shared/deps/reconnecting-websocket.min.js"></script>
+    <title>727</title>
 </head>
 
 <body>
@@ -25,6 +26,20 @@
         <div id="bluePickButton" class="pickButton">BLUE PICK</div>
         <div id="switchPickButton" class="pickButton switchPickButton" onclick="switchPick()">SWITCH PICK</div>
         <div id="autoPickButton" class="pickButton switchPickButton" onclick="switchAutoPick()">ENABLE AUTOPICK</div>
+
+        <hr>
+        <div id="autoAdvanceButton" class="pickButton switchPickButton" onclick="switchAutoAdvance()">AUTO ADVANCE: OFF</div>
+        <div id="autoAdvanceTimer" class="controlLabel"><span id="autoAdvanceTimerLabel">Switching to __SCENE__ in</span> <span id="autoAdvanceTimerTime"></span></div>
+
+        <br>
+        <br>
+        <div class="controlLabel">Scenes (click to switch)</div>
+        <br>
+        <div id="sceneCollection">
+            <template id="sceneButtonTemplate">
+                <div class="sceneButton switchPickButton">SWITCH TO __SCENE_NAME__</div>
+            </template>
+        </div>
     </div>
     <script src="index.js"></script>
 </body>

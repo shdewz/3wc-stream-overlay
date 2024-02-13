@@ -2,20 +2,57 @@ window.addEventListener('contextmenu', (e) => e.preventDefault());
 
 // START
 let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
-let user = {};
 
 // NOW PLAYING
-let mapContainer = document.getElementById('mapContainer');
-let mapArtist = document.getElementById('mapName');
-let mapInfo = document.getElementById('mapInfo');
-let mapper = document.getElementById('mapper');
-let stars = document.getElementById('stars');
 let stats = document.getElementById('stats');
 let red_button = document.getElementById('redPickButton');
 let blue_button = document.getElementById('bluePickButton');
 let autopick_button = document.getElementById('autoPickButton');
 
+const sceneCollection = document.getElementById("sceneCollection");
+let autoadvance_button = document.getElementById('autoAdvanceButton');
+let autoadvance_timer_container = document.getElementById('autoAdvanceTimer');
+let autoadvance_timer_label = document.getElementById('autoAdvanceTimerLabel');
+let autoadvance_timer_time = new CountUp('autoAdvanceTimerTime', 10, 0, 1, 10, {useEasing: false, suffix: 's'});
+autoadvance_timer_container.style.opacity = '0';
+
+let enableAutoAdvance = false;
+let sceneTransitionTimeoutID;
+let lastState;
+const gameplay_scene_name = "gameplay";
+const mappool_scene_name = "mappool";
+let selectedMapsTransitionTimeout = {};
+const pick_to_transition_delay_ms = 10000;
+
+
 const beatmaps = new Set();
+
+
+obsGetScenes(scenes => {
+    for (const scene of scenes) {
+        let clone = document.getElementById("sceneButtonTemplate").content.cloneNode(true);
+        let buttonNode = clone.querySelector('div');
+        buttonNode.id = `scene__${scene}`;
+        buttonNode.textContent = `GO TO: ${scene}`;
+        buttonNode.onclick = function() { obsSetCurrentScene(scene); };
+        sceneCollection.appendChild(clone);
+    }
+
+    obsGetCurrentScene((scene) => {
+        document.getElementById(`scene__${scene.name}`).classList.add("activeScene");
+    });
+});
+
+window.addEventListener('obsSceneChanged', function(event) {
+    let activeButton = document.getElementById(`scene__${event.detail.name}`);
+
+    for (const scene of sceneCollection.children) {
+        scene.classList.remove("activeScene");
+    }
+    activeButton.classList.add("activeScene");
+
+});
+
 
 socket.onopen = () => { console.log('Successfully Connected'); };
 socket.onclose = event => { console.log('Socket Closed Connection: ', event); socket.send('Client Closed!'); };
@@ -101,6 +138,28 @@ socket.onmessage = async (event) => {
 
     if (!hasSetup) setupBeatmaps();
 
+    /**
+     * switch to mappool scene after ranking screen
+     */
+    {
+        let newState = data.tourney.manager.ipcState;
+        if (enableAutoAdvance) {
+            if (lastState === TourneyState.Ranking && newState === TourneyState.Idle) {
+                sceneTransitionTimeoutID = setTimeout(() => {
+                    obsGetCurrentScene((scene) => {
+                        if (scene.name !== gameplay_scene_name)  // e.g. on winner screen
+                            return
+                        obsSetCurrentScene(mappool_scene_name);
+                    });
+                }, 2000);
+            }
+            if (lastState !== newState && newState !== TourneyState.Idle) {
+                clearTimeout(sceneTransitionTimeoutID);
+            }
+        }
+        lastState = newState;
+    }
+
     if (blueName !== data.tourney.manager.teamName.right && data.tourney.manager.teamName.right) {
         blueName = data.tourney.manager.teamName.right || 'Blue';
     }
@@ -182,6 +241,20 @@ const pickMap = (bm, teamName, color) => {
         bm.pickedStatus.style.outline = bm.mods.includes('TB') ? '3px solid #ffffff' : `3px solid ${color == 'Red' ? '#ff8d8d' : '#93b5ff'}`;
         bm.pickedStatus.innerHTML = bm.mods.includes('TB') ? 'Tiebreaker' : `<b class="pick${color}">${teamName}</b> pick`;
     }, 300);
+
+    if (enableAutoAdvance) {
+        selectedMapsTransitionTimeout[bm.beatmapID] = setTimeout(() => {
+            obsSetCurrentScene(gameplay_scene_name);
+            autoadvance_timer_container.style.opacity = '0';
+        }, pick_to_transition_delay_ms);
+
+        autoadvance_timer_time = new CountUp('autoAdvanceTimerTime',
+            pick_to_transition_delay_ms/1000, 0, 1, pick_to_transition_delay_ms/1000,
+            {useEasing: false, suffix: 's'});
+        autoadvance_timer_time.start();
+        autoadvance_timer_container.style.opacity = '1';
+        autoadvance_timer_label.textContent = `Switching to ${gameplay_scene_name} in`;
+    }
 }
 
 const banMap = (bm, teamName, color) => {
@@ -248,5 +321,17 @@ const switchAutoPick = () => {
         enableAutoPick = true;
         autopick_button.innerHTML = 'DISABLE AUTOPICK';
         autopick_button.style.backgroundColor = '#9ffcb3';
+    }
+}
+const switchAutoAdvance = () => {
+    if (enableAutoAdvance) {
+        enableAutoAdvance = false;
+        autoadvance_button.innerHTML = 'AUTO ADVANCE: OFF';
+        autoadvance_button.style.backgroundColor = '#fc9f9f';
+    }
+    else {
+        enableAutoAdvance = true;
+        autoadvance_button.innerHTML = 'AUTO ADVANCE: ON';
+        autoadvance_button.style.backgroundColor = '#9ffcb3';
     }
 }

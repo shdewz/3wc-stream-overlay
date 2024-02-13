@@ -243,6 +243,9 @@ const pickMap = (bm, teamName, color) => {
     }, 300);
 
     if (enableAutoAdvance) {
+        if (Object.hasOwn(selectedMapsTransitionTimeout, bm.beatmapID)) {
+            clearTimeout(selectedMapsTransitionTimeout[bm.beatmapID]);
+        }
         selectedMapsTransitionTimeout[bm.beatmapID] = setTimeout(() => {
             obsSetCurrentScene(gameplay_scene_name);
             autoadvance_timer_container.style.opacity = '0';
@@ -277,6 +280,9 @@ const banMap = (bm, teamName, color) => {
 }
 
 const resetMap = bm => {
+    clearTimeout(selectedMapsTransitionTimeout[bm.beatmapID]);
+    autoadvance_timer_container.style.opacity = '0';
+
     document.cookie = `lastPick=;path=/`;
 
     bm.overlay.style.opacity = '0.6';

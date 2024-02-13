@@ -273,6 +273,29 @@ html {
     justify-content: center;
 }
 
+.controlLabel {
+    color: #bfbfbf;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.sceneButton {
+    width: 240px;
+    height: 40px;
+    margin-bottom: 12px;
+    padding-left: 8px;
+    font-size: 22px;
+    display: flex;
+    text-align: left;
+    align-items: center;
+    justify-content: left;
+    color: var(--red);
+}
+
+.activeScene {
+    background-color: #3a8f29!important;
+}
+
 #redPickButton {
     color: #f38181;
     background-color: #4e1e1e;
@@ -297,5 +320,9 @@ html {
 }
 
 #autoPickButton {
+    background-color: #fc9f9f;
+}
+
+#autoAdvanceButton {
     background-color: #fc9f9f;
 }

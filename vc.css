@@ -2,12 +2,13 @@
 [data-userid="0"] { display: none; }
 
 body {
-    --width: 120;
+    --color: #98db81;
+    --align: flex-end;
 
-    --widthPX: calc(var(--width) * 1px);
+    --width: 120px;
     --height: 100px;
     --nameHeight: 26px;
-    --fontSize: calc((var(--widthPX) / 100) * 15);
+    --fontSize: calc((var(--width) / 100) * 15);
 
     width: 100%;
     overflow: hidden;
@@ -21,20 +22,20 @@ ul {
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] {
     opacity: 1 !important;
     filter: grayscale(0%) !important;
-    outline-offset: calc(var(--widthPX) / 20 * -1);
+    outline: none;
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] {
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: var(--align);
     padding: 0;
     gap: 0;
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] {
-    width: var(--widthPX);
+    width: var(--width);
     height: var(--height);
     margin-bottom: 0px;
     background-color: black;
@@ -44,7 +45,7 @@ ul {
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatar"] {
-    height: var(--widthPX);
+    height: var(--width);
     width: 100%;
     border-radius: 0;
     border-width: 0;
@@ -66,11 +67,11 @@ ul {
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] + [class^="Voice_user"] {
-    background-color: #6dd46d !important;
+    background-color: var(--color) !important;
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] + [class^="Voice_user"] [class^="Voice_name"] {
-    color: #112611 !important;
+    /* color: #112611 !important; */
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class^="Voice_user"] [class^="Voice_name"] {

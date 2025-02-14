@@ -1,180 +1,164 @@
+:root {
+	--footer-height: 140px;
+}
+
 body,
 html {
 	padding: 0;
 	margin: 0;
-	overflow-y: hidden;
-	font-family: 'Helvetica Now';
+	/* overflow-y: hidden; */
+	/* overflow-x: hidden; */
+	font-family: 'Din';
 }
 
-#main {
+.main {
+	position: relative;
 	width: 1920px;
 	height: 1080px;
-	position: relative;
-}
-
-#bg-video {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	min-width: 100%;
-	min-height: 100%;
-	z-index: -10;
-}
-
-#header-container {
-	height: 200px;
-	width: fit-content;
-	position: absolute;
-	top: 140px;
-	left: 50%;
-	transform: translateX(-50%);
+	background-image: url('../_shared/assets/bg-edges-no-noise.png');
+	color: var(--light);
 	display: flex;
 	align-items: center;
-	gap: 16px;
-	color: var(--light);
 }
 
-#title-stage-container {
+.noise {
+	position: absolute;
+	width: 1920px;
+	height: 1080px;
+	background-image: url('../_shared/assets/noise.png');
+	z-index: 100;
+	mix-blend-mode: soft-light;
+	opacity: 0.4;
+	pointer-events: none;
+}
+
+.logo {
+	background-image: url('../_shared/assets/logo.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 112px;
+	height: 112px;
+	position: absolute;
+	right: 94px;
+	top: 56px;
+	opacity: 0.1;
+}
+
+.header {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-}
-
-#logotext {
-	font-size: 48px;
-	font-weight: 700;
-}
-
-#stage-name {
-	font-size: 28px;
-	font-weight: 500;
-	letter-spacing: 3px;
-	margin-top: -8px;
-	margin-left: 2px;
-}
-
-#logo-container {
-	height: 90px;
-	width: 90px;
-}
-
-#logo {
-	height: 100%;
 	width: 100%;
-	outline: 4px solid var(--light);
-	border-radius: 12px;
+	font-size: 8rem;
+	font-weight: bold;
+	color: var(--accent);
+	padding-left: 100px;
 }
 
-#header {
-	width: 1920px;
-	height: 100px;
-	opacity: 100%;
-	letter-spacing: 1px;
-	font-size: 36px;
+.title-sub {
+	margin-left: 0.1em;
+	font-size: 0.4em;
 	display: flex;
-	justify-content: center;
+	gap: 0.3em;
 	align-items: center;
-	color: #ffffff;
 }
 
-#full-overlay {
-	width: 1920px;
-	height: 1080px;
-	background-size: cover;
+.title-sub-logo {
+	background-image: url('../_shared/assets/icon_round.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 1em;
+	height: 1em;
+	filter: saturate(90%);
 }
 
-#team-container {
+.sponsors {
 	position: absolute;
-	top: 520px;
-	height: 300px;
-	width: 100%;
 	display: flex;
-	justify-content: center;
+	bottom: 20px;
+	left: 64px;
+	align-items: center;
+}
+
+.wooting {
+	background-image: url('../_shared/assets/sponsors/wooting.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 200px;
+	height: 46px;
+}
+
+.acrid {
+	background-image: url('../_shared/assets/sponsors/acrid.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center left;
+	width: 200px;
+	height: 32px;
+	margin-bottom: 6px;
+}
+
+.sponsor-separator {
+	font-size: 2.8rem;
+	font-weight: 800;
+	transform: rotate(45deg);
+	margin-left: 20px;
+	margin-right: 12px;
+	margin-bottom: 4px;
+}
+
+/**/
+
+.starting-content {
+	margin-top: 20px;
+	color: #fcfcfc;
+	font-size: 0.5em;
+	font-weight: 500;
+}
+
+.starting-title {
+	font-style: italic;
+}
+
+.match {
+	display: flex;
+}
+
+.teams {
+	display: flex;
+	color: var(--light);
+	gap: 32px;
 }
 
 .team {
 	display: flex;
-	color: var(--light);
+	align-items: center;
+	gap: 12px;
+	font-weight: 700;
 }
 
-.team.vs {
-	height: 46px;
-	color: var(--light);
-	opacity: 1;
+.vs {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 48px;
-	padding: 0 12px;
+	font-size: 0.8em;
+	font-weight: 500;
 }
 
-.flag-col {
+.score {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.team-point {
+	font-weight: 700;
+}
+
+.team-flag {
 	width: 70px;
 	height: 47px;
-}
-
-.flag-col.red {
-	margin-right: 24px;
-}
-
-.flag-col.blue {
-	margin-left: 24px;
-}
-
-.player-col.red {
-	margin-right: 18px;
-}
-
-.player-col.blue {
-	margin-left: 18px;
-}
-
-.team-name {
-	font-weight: bold;
-	text-transform: uppercase;
-	font-size: 40px;
-	margin-bottom: 10px;
-}
-
-.player {
-	font-size: 30px;
-}
-
-.blue {
-	text-align: right;
-}
-
-#title {
-	position: absolute;
-	color: var(--light);
-	bottom: 32px;
-	width: 100%;
-	text-align: center;
-	text-transform: uppercase;
-	font-weight: 400;
-	letter-spacing: 1px;
-	font-size: 22px;
-}
-
-#note {
-	margin-right: 6px;
-}
-
-/*Scrollbar*/
-::-webkit-scrollbar {
-	width: 0px;
-	visibility: 0;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-	margin-top: 25px;
-	margin-bottom: 25px;
-	visibility: 0;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background: grey;
-	border-radius: 10px;
+	background-image: url('../_shared/assets/flags/XX.png');
 }

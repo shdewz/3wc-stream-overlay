@@ -3,59 +3,49 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="style.css?t=<?php echo time()?>">
+	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="../_shared/common.css">
-	<script src="../_shared/deps/countUp.js"></script>
-	<script src="../_shared/deps/reconnecting-websocket.min.js"></script>
 	<script src="../_shared/deps/jquery.min.js"></script>
+	<script src="../_shared/deps/reconnecting-websocket.min.js"></script>
 </head>
 
 <body>
-	<div id="main">
-		<video autoplay muted loop id="bg-video">
-			<source src="../_shared/assets/background.mp4" type="video/mp4">
-		</video>
-		<div id="full-overlay">
-			<div id="header-container">
-				<div id="logo-container"><img src="../_shared/assets/icon_round.png" id="logo"></div>
-				<div id="title-stage-container">
-					<div id="logotext">3 DIGIT WORLD CUP</div>
-					<div id="stage-name">-</div>
-				</div>
+	<div id="controls"></div>
+
+	<div class="main">
+		<div class="noise"></div>
+		<div class="logo"></div>
+		<div class="header">
+			<div class="title-sub">
+				<div class="title-sub-logo"></div>
+				<div class="title-sub-text">3 Digit World Cup 2025</div>
 			</div>
-			<div id="team-container">
-				<div class="team">
-					<div class="flag-col red">
-						<img id="red-flag">
-					</div>
-					<div class="player-col red">
-						<div class="team-name red" id="red-team"></div>
-						<div class="player red" id="red-player-1"></div>
-						<div class="player red" id="red-player-2"></div>
-						<div class="player red" id="red-player-3"></div>
-						<div class="player red" id="red-player-4"></div>
-						<div class="player red" id="red-player-5"></div>
-						<div class="player red" id="red-player-6"></div>
-					</div>
-				</div>
-				<div class="team vs" id="score">0 – 0</div>
-				<div class="team">
-					<div class="player-col blue">
-						<div class="team-name blue" id="blue-team"></div>
-						<div class="player blue" id="blue-player-1"></div>
-						<div class="player blue" id="blue-player-2"></div>
-						<div class="player blue" id="blue-player-3"></div>
-						<div class="player blue" id="blue-player-4"></div>
-						<div class="player blue" id="blue-player-5"></div>
-						<div class="player blue" id="blue-player-6"></div>
-					</div>
-					<div class="flag-col blue">
-						<img id="blue-flag">
+			<div class="stage" id="stage"></div>
+			<div class="starting-content">
+				<div class="match" id="match">
+					<div class="teams">
+						<div class="team red">
+							<div class="team-flag" id="flag_red"></div>
+							<div class="team-name" id="name_red"></div>
+						</div>
+						<div class="score">
+							<div class="team-point" id="score_red"></div>
+							<div class="team-point-separator">-</div>
+							<div class="team-point" id="score_blue"></div>
+						</div>
+						<div class="team blue">
+							<div class="team-name" id="name_blue"></div>
+							<div class="team-flag" id="flag_blue"></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div id="title"></div>
+		<div class="sponsors">
+			<div class="sponsor wooting"></div>
+			<div class="sponsor-separator">+</div>
+			<div class="sponsor acrid"></div>
+		</div>
 	</div>
 	<script src="index.js"></script>
 </body>

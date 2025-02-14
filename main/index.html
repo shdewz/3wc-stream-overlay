@@ -3,81 +3,173 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css?t=<?php echo time()?>">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../_shared/common.css">
+    <script src="../_shared/deps/jquery.min.js"></script>
     <script src="../_shared/deps/countUp.js"></script>
     <script src="../_shared/deps/reconnecting-websocket.min.js"></script>
-    <script src="../_shared/deps/jquery.min.js"></script>
-    <script src="../_shared/deps/Chart.min.js"></script>
-    <script src="../_shared/deps/smooth.js"></script>
+    <script src="../_shared/utils.js"></script>
+    <script src="https://kit.fontawesome.com/3f04b9f9c1.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div id="main">
-        <video autoplay muted loop id="bg-video">
-            <source src="../_shared/assets/background.mp4" type="video/mp4">
-        </video>
-        <div id="full-overlay">
-            <div id="header">
-                <div id="red-points"></div>
-                <div id="blue-points"></div>
-                <div id="red-name">Red Team</div>
-                <div id="blue-name">Blue Team</div>
-                <div id="red-bar"></div>
-                <div id="blue-bar"></div>
-                <img id="red-flag" src="https://assets.ppy.sh/old-flags/XX.png">
-                <img id="blue-flag" src="https://assets.ppy.sh/old-flags/XX.png">
-                <div id="header-container">
-                    <div id="logo-container"><img src="../_shared/assets/icon_round.png" id="logo"></div>
-                    <div id="title-stage-container"><div id="logotext">3 DIGIT WORLD CUP</div><div id="stage-name">-</div></div>
+    <div class="main">
+        <div class="noise"></div>
+        <div class="header">
+            <div class="header-team red">
+                <div class="team-border red">
+                    <div class="team-seed" id="red_seed">SEED X</div>
+                </div>
+                <div class="team-text red">
+                    <div class="team-name">
+                        <div class="team-flag" id="red_flag"></div>
+                        <div class="team-name-text" id="red_name">Red Team</div>
+                    </div>
+                    <div class="team-points red" id="red_points"></div>
                 </div>
             </div>
-            <div id="gameplay-area"></div>
-            <div id="footer">
-                <div id="top-footer">
-                    <div id="lead-bar"></div>
-                    <div id="score-red">0</div>
-                    <div id="score-blue">0</div>
-                    <div id="scorediff">0</div>
+            <div class="header-middle">
+                <div class="header-middle__item" id="middle_item_1">
+                    <div class="logo"></div>
                 </div>
-                <div id="bottom-footer">
-                    <div id="mapimage-container">
-                        <img id="picked-by-flag">
-                        <p id="picked-by-label">PICK</p>
-                    </div>
-                    <div id="stats-container">
-                        <div id="strain-container">
-                            <div id="strain-background">
-                                <div id="strain-dim"></div>
-                            </div>
-                            <canvas id="strains" width="1420" height="100"></canvas>
-                            <div id="progress">
-                                <canvas id="strainsProgress" width="1420" height="100"></canvas>
-                            </div>
-                        </div>
-                        <div id="title-container">
-                            <span id="title">Placeholder Title</span>
-                            <span id="map-diff"><span id="diff">[Placeholder Difficulty]</span> mapped by <span
-                                    id="mapper">Mapper</span></span>
-                        </div>
-                        <div id="props-container">
-                            <div class="props-group">
-                                <span class="props-item">length <span id="len" class="highlight">0:00</span></span>
-                                <span class="props-item">bpm <span id="bpm" class="highlight">0</span></span>
-                                <span class="props-item">sr <span id="sr" class="highlight">0.00</span></span>
-                            </div>
-                            <div class="props-group">
-                                <span class="props-item">cs <span id="cs" class="highlight">0</span></span>
-                                <span class="props-item">ar <span id="ar" class="highlight">0</span></span>
-                                <span class="props-item">od <span id="od" class="highlight">0</span></span>
-                            </div>
-                        </div>
+                <div class="header-middle__item" id="middle_item_2">
+                    <div class="header-middle__item-title">Sponsored by</div>
+                    <div class="sponsor">
+                        <div class="sponsor-logo wooting"></div>
                     </div>
                 </div>
-                <div id="chat-container">
-                    <div id="chat"></div>
+                <div class="header-middle__item" id="middle_item_3">
+                    <div class="header-middle__item-title">CURRENT STAGE</div>
+                    <div class="stage-name" id="stage_name">X</div>
+                </div>
+                <div class="header-middle__item" id="middle_item_4">
+                    <div class="header-middle__item-title">Sponsored by</div>
+                    <div class="sponsor">
+                        <div class="sponsor-logo acrid"></div>
+                    </div>
                 </div>
             </div>
+            <div class="header-team blue">
+                <div class="team-text blue">
+                    <div class="team-name">
+                        <div class="team-name-text" id="blue_name">Blue Team</div>
+                        <div class="team-flag" id="blue_flag"></div>
+                    </div>
+                    <div class="team-points blue" id="blue_points"></div>
+                </div>
+                <div class="team-border blue">
+                    <div class="team-seed" id="blue_seed">SEED X</div>
+                </div>
+            </div>
+        </div>
+        <div class="gameplay-area"></div>
+        <div class="footer">
+            <div class="footer-accents">
+                <div class="footer-accent red"></div>
+                <div class="footer-accent blue"></div>
+            </div>
+            <div class="footer-content">
+                <div class="score-area" id="score_display">
+                    <div class="lead-bar" id="lead_bar"></div>
+                    <div class="team-scores">
+                        <div class="team-score red" id="score_red">0</div>
+                        <div class="team-score blue" id="score_blue">0</div>
+                    </div>
+                    <div class="score-diff-container" id="score_diff_container">
+                        <i class="fa-solid fa-caret-left red"></i>
+                        <div class="score-diff" id="score_diff" data-before="" data-after="">0</div>
+                        <i class="fa-solid fa-caret-right blue"></i>
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <div class="map-image-container">
+                        <div class="map-image-container-inside">
+                            <div class="map-image" id="map_background"></div>
+                            <div class="map-slot" id="map_slot_container">
+                                <div class="map-slot-text" id="map_slot_text"></div>
+                            </div>
+                            <div class="picked-by-container" id="picked_by_container">
+                                <div class="picked-by-text" id="picked_by">PICKED BY</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="map-stats-container">
+                        <div class="map-title-container">
+                            <div class="map-title" id="map_artist_title">Artist - Title</div>
+                            <div class="map-difficulty" id="map_difficulty">[Difficulty]</div>
+                        </div>
+                        <div class="map-attributes-container">
+                            <div class="map-attribute">
+                                <div class="map-attribute-label">CS</div>
+                                <div class="map-attribute-value" id="cs">0</div>
+                            </div>
+                            <div class="map-attribute">
+                                <div class="map-attribute-label">AR</div>
+                                <div class="map-attribute-value" id="ar">0</div>
+                            </div>
+                            <div class="map-attribute">
+                                <div class="map-attribute-label">OD</div>
+                                <div class="map-attribute-value" id="od">0</div>
+                            </div>
+                            <div class="map-attribute">
+                                <div class="map-attribute-label">BPM</div>
+                                <div class="map-attribute-value" id="bpm">0</div>
+                            </div>
+                            <div class="map-attribute">
+                                <div class="map-attribute-label">LEN</div>
+                                <div class="map-attribute-value" id="len">0:00</div>
+                            </div>
+                            <div class="map-attribute">
+                                <div class="map-attribute-label">SR</div>
+                                <div class="map-attribute-value"><span id="sr">0</span><i class="fa-solid fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-container" id="chat_container">
+                    <div class="chat" id="chat"></div>
+                </div>
+            </div>
+
+            <!-- <div class="bottom-footer">
+                <div class="map-slot-container" id="map_slot_container">
+                    <div class="map-slot" id="map_slot"></div>
+                </div>
+                <div class="map-image-container" id="map_image_container">
+                    <div class="map-image" id="map_image"></div>
+                    <div class="picked-by" id="picked_by"></div>
+                </div>
+                <div class="stats-container">
+                    <div class="stats-section">
+                        <div class="title" id="title">–</div>
+                    </div>
+                    <div class="stats-section">
+                        <div class="stat"><span>CS</span><span class="stat-value" id="cs">0</span></div>
+                        <div class="stat"><span>AR</span><span class="stat-value" id="ar">0</span></div>
+                        <div class="stat"><span>OD</span><span class="stat-value" id="od">0</span></div>
+                    </div>
+                    <div class="stats-section">
+                        <div class="stat"><span>BPM</span><span class="stat-value" id="bpm">0</span></div>
+                        <div class="stat"><span>LENGTH</span><span class="stat-value" id="length">0:00</span></div>
+                        <div class="stat"><span>SR</span><span class="stat-value" id="sr">0.00★</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-container" id="chat_container">
+                <div class="chat-title">CHAT</div>
+                <div class="chat" id="chat"></div>
+                <div class="chat-timer-container" id="timer_container">
+                    <div class="chat-timer__progress-container">
+                        <div class="chat-timer__progress" id="timer_progress"></div>
+                    </div>
+                    <div class="stopwatch-container" id="stopwatch_container">
+                        <div class="stopwatch"></div>
+                    </div>
+                </div>
+            </div> -->
         </div>
     </div>
     <script src="index.js"></script>

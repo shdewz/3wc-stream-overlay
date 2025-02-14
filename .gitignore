@@ -1,4 +1,5 @@
-_data/*.json
+_data/coming_up.json
+_data/beatmaps.json
 qualifiers/
 schedule/
 schedule*

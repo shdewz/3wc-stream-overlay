@@ -1,2 +1,8 @@
-_data/
-_shared/assets/qualis_bg.png
+_data/*.json
+qualifiers/
+schedule/
+schedule*
+thumbnail*
+*.zip
+*.webm
+_misc/

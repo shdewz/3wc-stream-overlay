@@ -1,219 +1,224 @@
+:root {
+	--footer-height: 140px;
+}
+
 body,
 html {
 	padding: 0;
 	margin: 0;
-	overflow-y: hidden;
-	font-family: 'Helvetica Now';
+	/* overflow-y: hidden; */
+	/* overflow-x: hidden; */
+	font-family: 'Din';
 }
 
-#main {
-	width: 1920px;
+#controls {
+	position: absolute;
 	height: 1080px;
-	position: relative;
+	width: 300px;
+	left: 1920px;
+	background-color: #fcfcfc;
 }
 
-#bg-video {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	min-width: 100%;
-	min-height: 100%;
-	z-index: -10;
+#middle {
+	opacity: 0;
+	transition: opacity 300ms ease;
 }
 
-#header-container {
-	height: 200px;
-	width: fit-content;
-	position: absolute;
-	top: 140px;
-	left: 50%;
-	transform: translateX(-50%);
-	display: flex;
-	align-items: center;
-	gap: 16px;
-	color: var(--light);
-}
-
-#title-stage-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-
-#logotext {
-	font-size: 48px;
-	font-weight: 700;
-}
-
-#stage-name {
-	font-size: 28px;
-	font-weight: 500;
-	letter-spacing: 3px;
-	margin-top: -8px;
-	margin-left: 2px;
-}
-
-#logo-container {
-	height: 90px;
-	width: 90px;
-}
-
-#logo {
-	height: 100%;
+.bar {
 	width: 100%;
-	outline: 4px solid var(--light);
-	border-radius: 12px;
-}
-
-#coming-up {
-	position: absolute;
-	top: 360px;
-	height: 90px;
-	width: 100%;
-	text-align: center;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-direction: column;
-	color: var(--light);
-	font-family: 'Mont';
+	margin: 20px 0;
+}
+
+.button {
+	background-color: #111111;
+	border: none;
+	color: white;
+	padding: 8px 16px;
+	margin: 0px 4px;
 	text-align: center;
-	font-variant-numeric: tabular-nums;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 22px;
+	cursor: pointer;
+	transition: 100ms ease-out;
+	user-select: none;
+}
+
+.button:hover {
+	background-color: #575757;
+}
+
+.wide {
+	width: 140px;
+	padding: 8px 36px;
+	font-size: 18px;
+}
+
+#current_team {
+	font-size: 20px;
+	font-weight: bold;
 	text-transform: uppercase;
 }
 
-#comingup-title {
-	font-weight: bold;
-	font-size: 22px;
-	letter-spacing: -1px;
-}
+/* actual overlay */
 
-#timer {
-	height: 80px;
-	font-weight: bold;
-	letter-spacing: -2px;
-	font-size: 72px;
-	margin-top: -18px;
-}
-
-#coming-up h3 {
-	font-size: 30px;
-	line-height: 72px;
-	margin-top: 26px;
-	padding-left: 18px;
-	font-weight: bold;
-}
-
-#header {
-	width: 1920px;
-	height: 100px;
-	opacity: 100%;
-	letter-spacing: 1px;
-	font-size: 36px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: var(--light);
-}
-
-#full-overlay {
+.main {
+	position: relative;
 	width: 1920px;
 	height: 1080px;
-	background-size: cover;
+	background-image: url('../_shared/assets/bg-edges-no-noise.png');
+	color: var(--light);
+	display: flex;
+	align-items: center;
 }
 
-#team-container {
+.noise {
 	position: absolute;
-	top: 520px;
-	height: 300px;
-	width: 100%;
+	width: 1920px;
+	height: 1080px;
+	background-image: url('../_shared/assets/noise.png');
+	z-index: 100;
+	mix-blend-mode: soft-light;
+	opacity: 0.4;
+	pointer-events: none;
+}
+
+.logo {
+	background-image: url('../_shared/assets/logo.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 112px;
+	height: 112px;
+	position: absolute;
+	right: 94px;
+	top: 56px;
+	opacity: 0.1;
+}
+
+.header {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+	font-size: 8rem;
+	font-weight: bold;
+	color: var(--accent);
+	padding-left: 100px;
+}
+
+.starting-soon::after {
+	content: "\2026";
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: bottom;
+	animation: ellipsis steps(4, end) 2000ms infinite;
+	width: 0px;
+	margin-left: 0.1em;
+}
+
+@keyframes ellipsis {
+	to {
+		width: 1.1em;
+	}
+}
+
+.title-sub {
+	margin-left: 0.1em;
+	font-size: 0.4em;
+	display: flex;
+	gap: 0.3em;
+	align-items: center;
+}
+
+.title-sub-logo {
+	background-image: url('../_shared/assets/icon_round.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 1em;
+	height: 1em;
+	filter: saturate(90%);
+}
+
+.sponsors {
+	position: absolute;
+	display: flex;
+	bottom: 20px;
+	left: 64px;
+	align-items: center;
+}
+
+.wooting {
+	background-image: url('../_shared/assets/sponsors/wooting.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 200px;
+	height: 46px;
+}
+
+.acrid {
+	background-image: url('../_shared/assets/sponsors/acrid.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center left;
+	width: 200px;
+	height: 32px;
+	margin-bottom: 6px;
+}
+
+.sponsor-separator {
+	font-size: 2.8rem;
+	font-weight: 800;
+	transform: rotate(45deg);
+	margin-left: 20px;
+	margin-right: 12px;
+	margin-bottom: 4px;
+}
+
+/**/
+
+.starting-content {
+	margin-top: 20px;
+	color: #fcfcfc;
+	font-size: 0.5em;
+	font-weight: 500;
+}
+
+.starting-title {
+	font-style: italic;
+}
+
+.match {
+	display: none;
+}
+
+.teams {
+	display: flex;
+	color: var(--light);
+	gap: 32px;
 }
 
 .team {
 	display: flex;
-	color: var(--light);
+	align-items: center;
+	gap: 12px;
+	font-weight: 700;
 }
 
-.team.vs {
-	width: 70px;
-	height: 44px;
-	color: var(--light);
-	opacity: 0.8;
+.vs {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 30px;
+	font-size: 0.8em;
+	font-weight: 500;
 }
 
-.flag-col {
+.team-flag {
 	width: 70px;
 	height: 47px;
-}
-
-.flag-col.red {
-	margin-right: 24px;
-}
-
-.flag-col.blue {
-	margin-left: 24px;
-}
-
-.player-col.red {
-	margin-right: 18px;
-}
-
-.player-col.blue {
-	margin-left: 18px;
-}
-
-.team-name {
-	font-weight: bold;
-	text-transform: uppercase;
-	font-size: 40px;
-	margin-bottom: 10px;
-}
-
-.player {
-	font-size: 30px;
-}
-
-.blue {
-	text-align: right;
-}
-
-#title {
-	position: absolute;
-	color: var(--light);
-	bottom: 32px;
-	width: 100%;
-	text-align: center;
-	text-transform: uppercase;
-	font-weight: 400;
-	letter-spacing: 1px;
-	font-size: 22px;
-}
-
-#note {
-	margin-right: 6px;
-}
-
-/*Scrollbar*/
-::-webkit-scrollbar {
-	width: 0px;
-	visibility: 0;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-	margin-top: 25px;
-	margin-bottom: 25px;
-	visibility: 0;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background: grey;
-	border-radius: 10px;
+	background-image: url('../_shared/assets/flags/XX.png');
 }

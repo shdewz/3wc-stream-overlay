@@ -29,37 +29,31 @@
     font-weight: 700;
 }
 
-@font-face {
-    font-family: 'Helvetica Now';
-    src: url('../_shared/fonts/HelveticaNowText-Medium.otf');
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: 'Helvetica Now';
-    src: url('../_shared/fonts/HelveticaNowText-Bold.otf');
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: 'Helvetica Now';
-    src: url('../_shared/fonts/HelveticaNowText-Black.otf');
-    font-weight: 700;
-}
-
 :root {
-    --accent: #7ce07c;
-    --accent-faded: #ace2ac;
-    --accent-bg: #6dd46d;
-    --dark: #252525;
-    --dark-light: #818181;
+    --accent: #79d979;
+    --dark: #111111;
     --light: #fcfcfc;
+    --text-dark: #6f6f6f;
+    --progress-bg: #222222;
     --accent-mod-nm: #759de7;
     --accent-mod-hd: #eec875;
     --accent-mod-hr: #e97777;
     --accent-mod-dt: #ad73db;
     --accent-mod-fm: #85e285;
     --accent-mod-tb: #61cfc1;
-    --red: #ff8d8d;
-    --blue: #93b5ff;
+    --red: #ff605d;
+    --blue: #5da9ff;
+    --red-chat: #f89c9b;
+    --blue-chat: #96c4f8;
+}
+
+.noise {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-image: url('../_shared/assets/noise.png');
+	z-index: 100;
+	mix-blend-mode: soft-light;
+	opacity: 0.3;
+	pointer-events: none;
 }

@@ -1,0 +1,57 @@
+body,
+html {
+	padding: 0;
+	margin: 0;
+	/* overflow-y: hidden; */
+	/* overflow-x: hidden; */
+	font-family: 'Din';
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+}
+
+.spotify {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+    justify-content: flex-end;
+	gap: 16px;
+    color: #fcfcfc;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.spotify-info {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.spotify-track, .spotify-artist {
+    width: 600px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: right;
+}
+
+.spotify-track {
+	font-size: 28px;
+	font-weight: 700;
+}
+
+.spotify-artist {
+	font-size: 18px;
+	font-style: italic;
+}
+
+.spotify-album {
+	height: 64px;
+	aspect-ratio: 1;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}

@@ -3,6 +3,7 @@
 
 body {
     --color: #98db81;
+    --text-color-highlight: #222222;
     --align: flex-end;
 
     --width: 120px;
@@ -71,7 +72,7 @@ ul {
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] + [class^="Voice_user"] [class^="Voice_name"] {
-    /* color: #112611 !important; */
+    color: var(--text-color-highlight) !important;
 }
 
 [class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class^="Voice_user"] [class^="Voice_name"] {

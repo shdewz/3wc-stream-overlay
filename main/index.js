@@ -1,4 +1,4 @@
-const TEAMSIZE = 2;
+const TEAMSIZE = 3;
 const DEBUG = false;
 
 const cache = {};
@@ -208,7 +208,7 @@ socket.onmessage = async event => {
 		// cache.map.identifier = 'HD2';
 		if (cache.map?.identifier) {
 			$('#map_slot_container').css('animation', 'mapSlotIn 300ms 50ms ease forwards');
-			$('#map_slot_text').text(cache.map.identifier).css('opacity', 1);
+			$('#map_slot_text').text(cache.map.identifier);
 			cache.map_slot_active = true;
 		}
 		else {
@@ -220,7 +220,7 @@ socket.onmessage = async event => {
 			cache.map_slot_active = false;
 		}
 
-		const path = `http://${location.host}/Songs/${data.folders.beatmap}/${data.files.background}`.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/');
+		const path = `http://${location.host}/Songs/${data.folders.beatmap}/${data.files.background}`.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/').replace(/'/g, `\\'`);
 		$('#map_background').css('background-image', `url('${path}')`);
 	}
 
@@ -273,8 +273,6 @@ socket.onmessage = async event => {
 		const current_chat_len = data.tourney.chat.length;
 		if (cache.chatLen === 0 || (cache.chatLen > 0 && cache.chatLen > current_chat_len)) { $('#chat').html(''); cache.chatLen = 0; }
 
-		console.log(data.tourney.chat);
-
 		for (let i = cache.chatLen || 0; i < current_chat_len; i++) {
 			const chat = data.tourney.chat[i];
 			const body = chat.message;
@@ -297,7 +295,7 @@ socket.onmessage = async event => {
 
 			const team = team_lookup[chat.team] ?? 'unknown';
 			team_actual = teams.find(t => t.players.map(p => p.username).includes(player))?.team;
-			teamcode_actual = team_actual ? team_actual === nameRed ? 'red' : team_actual === nameBlue ? 'blue' : null : null;
+			teamcode_actual = team_actual ? team_actual === cache.nameRed ? 'red' : team_actual === cache.nameBlue ? 'blue' : null : null;
 
 			const chatParent = $('<div></div>').addClass(`chat-message ${team}`);
 

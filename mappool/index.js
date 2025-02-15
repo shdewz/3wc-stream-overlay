@@ -133,11 +133,11 @@ socket.onmessage = async (event) => {
     }
 
     if (mappool && cache.beatmap_id !== data.beatmap.id && data.beatmap.id !== 0) {
-        if (cache.beatmap_id === 0) cache.beatmap_id = data.beatmap.id;
+        if (!cache.beatmap_id) cache.beatmap_id = data.beatmap.id;
         else {
             cache.beatmap_id = data.beatmap.id;
             const pickedMap = Array.from(beatmaps).find(b => b.id === cache.beatmap_id);
-            if (pickedMap && toggles.enableAutoPick && !selectedMaps.includes(tempMapID)) pickMap(pickedMap, cache.currentPicker === 'red' ? cache.redName : cache.blueName, cache.currentPicker);
+            if (pickedMap && toggles.enableAutoPick && !selectedMaps.includes(cache.beatmap_id)) pickMap(pickedMap, cache.currentPicker === 'red' ? cache.redName : cache.blueName, cache.currentPicker);
         }
     }
 

@@ -2,12 +2,12 @@
 [data-userid="0"] { display: none; }
 
 body {
-    --color: #98db81;
+    --color: #79d979;
     --text-color-highlight: #222222;
-    --align: flex-end;
+    --align: flex-start;
 
     --width: 120px;
-    --height: 100px;
+    --height: 86px;
     --nameHeight: 26px;
     --fontSize: calc((var(--width) / 100) * 15);
 

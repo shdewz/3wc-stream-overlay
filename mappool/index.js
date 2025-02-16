@@ -218,7 +218,7 @@ const pickMap = (bm, teamName, color) => {
             selectedMapsTransitionTimeout[bm.id] = {
                 color: color,
                 timeoutId: setTimeout(() => {
-                    obsSetCurrentScene(gameplay_scene_name);
+                    obsSetCurrentScene(scenes.gameplay);
                     autoadvance_timer_container.style.opacity = '0';
                 }, pick_to_transition_delay_ms)
             };
@@ -228,7 +228,7 @@ const pickMap = (bm, teamName, color) => {
                 { useEasing: false, suffix: 's' });
             autoadvance_timer_time.start();
             autoadvance_timer_container.style.opacity = '1';
-            autoadvance_timer_label.textContent = `Switching to ${gameplay_scene_name} in`;
+            autoadvance_timer_label.textContent = `Switching to ${scenes.gameplay} in`;
         }
     }
 };

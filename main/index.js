@@ -43,7 +43,7 @@ const hide_pick_by_label = async () => {
 	picked_by_container.css('animation', 'pickerIn 300ms ease forwards reverse');
 	await delay(300);
 	$('#picked_by').text('');
-}
+};
 
 window.setInterval(async () => {
 	const current_pick = localStorage.getItem('current_pick');
@@ -72,7 +72,7 @@ window.setInterval(async () => {
             if (map_obj?.identifier?.toUpperCase().includes('TB')) return -4;
             if (cache.nameRed && cache.nameBlue) {
                 if (cache.pick_label_enabled) {
-					await hide_pick_by_label()
+					await hide_pick_by_label();
                 }
 
 				requestAnimationFrame(_ => {
@@ -80,12 +80,12 @@ window.setInterval(async () => {
 					$('#picked_by_container').css('animation', 'none');
 					void $('#picked_by_container')[0].offsetWidth; // Trigger reflow
 					$('#picked_by_container').css('animation', 'pickerIn 300ms 100ms ease forwards');
-				})
+				});
 
                 cache.pick_label_enabled = true;
 			}
 			else {
-				await hide_pick_by_label()
+				await hide_pick_by_label();
 				cache.pick_label_enabled = false;
 			}
 			return 0;
@@ -100,7 +100,7 @@ window.setInterval(async () => {
 
 	if (validity_state !== 0) {
 		if (cache.pick_label_enabled) {
-			await hide_pick_by_label()
+			await hide_pick_by_label();
 			cache.pick_label_enabled = false;
 		}
 	}

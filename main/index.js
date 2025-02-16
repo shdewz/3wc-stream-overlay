@@ -48,6 +48,9 @@ window.setInterval(async () => {
 		const parsedBeatmapID = parseInt(pick_value[0]);
 		if (isNaN(parsedBeatmapID)) return -2;
 
+		// value retrieved from local storage is ahead of websocket message handler, ignore for now.
+		if (cache.mapid !== parsedBeatmapID) return -6;
+
 		const parsedTeam = pick_value[1];
 		if (parsedTeam !== 'red' && parsedTeam !== 'blue') return -3;
 

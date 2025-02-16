@@ -36,6 +36,15 @@ const carousel = () => {
 	}, 7000);
 };
 
+const hide_pick_by_label = async () => {
+	const picked_by_container = $('#picked_by_container');
+	picked_by_container.css('animation', 'none');
+	void(picked_by_container[0].offsetWidth); // Trigger reflow
+	picked_by_container.css('animation', 'pickerIn 300ms ease forwards reverse');
+	await delay(300);
+	$('#picked_by').text('');
+};
+
 window.setInterval(async () => {
 	const current_pick = localStorage.getItem('current_pick');
 
@@ -48,6 +57,9 @@ window.setInterval(async () => {
 		const parsedBeatmapID = parseInt(pick_value[0]);
 		if (isNaN(parsedBeatmapID)) return -2;
 
+		// value retrieved from local storage is ahead of websocket message handler, ignore for now.
+		if (cache.mapid !== parsedBeatmapID) return -6;
+
 		const parsedTeam = pick_value[1];
 		if (parsedTeam !== 'red' && parsedTeam !== 'blue') return -3;
 
@@ -55,19 +67,25 @@ window.setInterval(async () => {
 		cache.current_pick = current_pick;
 
 		// if (true) {  // bypass beatmap id checking during development
-		if (cache.mapid == parsedBeatmapID) {
-			const map_obj = mappool.beatmaps.find(m => m.beatmap_id == cache.mapid);
-			if (map_obj?.identifier?.toUpperCase().includes('TB')) return -4;
-			if (cache.nameRed && cache.nameBlue) {
-				$('#picked_by').text(`PICKED BY ${(parsedTeam === 'red' ? cache.nameRed : cache.nameBlue).toUpperCase()}`);
-				$('#picked_by_container').css('animation', 'pickerIn 300ms 100ms ease forwards');
-				console.log('aa');
-				cache.pick_label_enabled = true;
+		if (cache.mapid === parsedBeatmapID) {
+            const map_obj = mappool.beatmaps.find(m => m.beatmap_id === cache.mapid);
+            if (map_obj?.identifier?.toUpperCase().includes('TB')) return -4;
+            if (cache.nameRed && cache.nameBlue) {
+                if (cache.pick_label_enabled) {
+					await hide_pick_by_label();
+                }
+
+				requestAnimationFrame(_ => {
+					$('#picked_by').text(`PICKED BY ${(parsedTeam === 'red' ? cache.nameRed : cache.nameBlue).toUpperCase()}`);
+					$('#picked_by_container').css('animation', 'none');
+					void $('#picked_by_container')[0].offsetWidth; // Trigger reflow
+					$('#picked_by_container').css('animation', 'pickerIn 300ms 100ms ease forwards');
+				});
+
+                cache.pick_label_enabled = true;
 			}
 			else {
-				$('#picked_by_container').css('animation', 'pickerIn 300ms ease forwards reverse');
-				await delay(300);
-				$('#picked_by').text('');
+				await hide_pick_by_label();
 				cache.pick_label_enabled = false;
 			}
 			return 0;
@@ -75,13 +93,14 @@ window.setInterval(async () => {
 		return -255;
 	};
 
-	const value = await checkValid();
-	if (value === -5) return;
-	else if (value !== 0) {
+	const validity_state = await checkValid();
+
+	if (validity_state === -5)
+		return;
+
+	if (validity_state !== 0) {
 		if (cache.pick_label_enabled) {
-			$('#picked_by_container').css('animation', 'pickerIn 300ms ease forwards reverse');
-			await delay(300);
-			$('#picked_by').text('');
+			await hide_pick_by_label();
 			cache.pick_label_enabled = false;
 		}
 	}

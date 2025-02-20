@@ -42,21 +42,21 @@ const update_match = match => {
 		update_team('blue', blue_team);
 	}
 
-	// maybe re-add this later
-	// if (match.time > Date.now()) {
-	// 	let timer_int = setInterval(() => {
-	// 		if (match.time < Date.now()) {
-	// 			clearInterval(timer_int);
-	// 			$('#timer').text('00:00');
-	// 		}
-	// 		let remaining = Math.floor((match.time - Date.now()) / 1000);
-	// 		let hours = Math.floor(remaining / 60 / 60);
-	// 		let date = new Date(null);
-	// 		date.setSeconds(remaining);
-	// 		let text = hours > 0 ? date.toISOString().slice(11, 19) : date.toISOString().slice(14, 19);
-	// 		if (timer && remaining > 0) $('#timer').text(text);
-	// 	}, 1000);
-	// }
+	if (match.time > Date.now()) {
+		$('#timer').addClass('enabled');
+		const timer_int = setInterval(() => {
+			if (match.time < Date.now() - 500) {
+				clearInterval(timer_int);
+				$('#timer').text('00:00');
+				$('#timer').removeClass('enabled');
+			}
+			const remaining = Math.floor((match.time - Date.now()) / 1000);
+			const date = new Date(null);
+			date.setSeconds(remaining);
+			const text = date.toISOString().slice(14, 19);
+			if (timer && remaining > -0.5) $('#timer').text(text);
+		}, 1000);
+	}
 };
 
 const update_team = (color, team) => {

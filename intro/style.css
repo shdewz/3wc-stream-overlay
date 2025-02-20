@@ -190,6 +190,19 @@ html {
 
 .starting-title {
 	font-style: italic;
+	display: flex;
+}
+
+.starting-title-timer {
+	width: 0;
+	opacity: 0;
+	transition: 300ms ease;
+	overflow: hidden;
+}
+
+.starting-title-timer.enabled {
+	width: 10rem;
+	opacity: 1;
 }
 
 .match {

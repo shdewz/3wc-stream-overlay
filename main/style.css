@@ -228,6 +228,7 @@ html {
 	display: flex;
 	justify-content: space-between;
 	z-index: 50;
+	pointer-events: none;
 }
 
 .footer-accent {

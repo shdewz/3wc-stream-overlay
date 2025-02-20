@@ -65,8 +65,11 @@ socket.onmessage = async event => {
 			$('#map_background').css('background-image', `url('${path}')`);
 		}
 
-		if (map?.custom) { $('#custom_mapper').text(map?.mapper ?? data.beatmap.mapper); $('#custom').css('opacity', 1); }
-		else { $('#custom_mapper').text(''); $('#custom').css('opacity', 0); }
+		if (map?.custom) { $('#custom_mapper').text(map?.mapper ?? data.beatmap.mapper); $('#custom').css('display', 'flex').css('opacity', 1); }
+		else { $('#custom_mapper').text(''); $('#custom').css('display', 'none').css('opacity', 0); }
+
+		if (map?.original) { $('#custom_artist').text(map?.artist ?? data.beatmap.artist); $('#original').css('display', 'flex').css('opacity', 1); }
+		else { $('#custom_artist').text(''); $('#original').css('display', 'none').css('opacity', 0); }
 
 		$('#mapper').text(map?.mapper ?? data.beatmap.mapper);
 	}

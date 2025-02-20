@@ -313,10 +313,10 @@ socket.onmessage = async event => {
 			if (player === 'BanchoBot' && body.startsWith('Match history')) continue;
 
 			const team = team_lookup[chat.team] ?? 'unknown';
-			team_actual = teams.find(t => t.players.map(p => p.username).includes(player))?.team;
-			teamcode_actual = team_actual ? team_actual === cache.nameRed ? 'red' : team_actual === cache.nameBlue ? 'blue' : null : null;
+			const team_actual = teams.find(t => t.players.map(p => p.username).includes(player))?.team;
+			const teamcode_actual = team_actual ? team_actual === cache.nameRed ? 'red' : team_actual === cache.nameBlue ? 'blue' : null : null;
 
-			const chatParent = $('<div></div>').addClass(`chat-message ${team}`);
+			const chatParent = $('<div></div>').addClass(`chat-message ${teamcode_actual || team}`);
 
 			chatParent.append($('<div></div>').addClass(`chat-name ${team}`).text(player));
 			chatParent.append($('<div></div>').addClass('chat-body').text(body));

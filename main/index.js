@@ -127,11 +127,11 @@ socket.onmessage = async event => {
 		if (cache.scoreVisible) {
 			$('#chat_container').css('animation', 'chatIn 300ms ease forwards reverse');
 			$('#score_display').css('opacity', 1);
-			$('#title').css('width', '1000px');
+			$('#map_title_container').addClass('expanded');
 		} else {
 			$('#chat_container').css('animation', 'chatIn 300ms ease forwards');
 			$('#score_display').css('opacity', 0);
-			$('#title').css('width', '654px');
+			$('#map_title_container').removeClass('expanded');
 		}
 	}
 

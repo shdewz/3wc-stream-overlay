@@ -287,11 +287,16 @@ html {
 	gap: 2px;
 }
 
-.map-title {
+.map-title, .map-difficulty {
 	width: 600px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	transition: width 300ms ease;
+}
+
+.map-title-container.expanded > .map-title, .map-title-container.expanded > .map-difficulty {
+	width: 1300px;
 }
 
 .map-difficulty {

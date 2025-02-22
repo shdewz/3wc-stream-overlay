@@ -2,6 +2,7 @@ _data/coming_up.json
 _data/streamer.json
 qualifiers/
 schedule/
+original/
 schedule*
 thumbnail*
 *.zip

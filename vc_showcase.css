@@ -1,0 +1,85 @@
+/* hide user by ID */
+[data-userid=""] { display: none; }
+
+body {
+    --color: #79d979;
+    --align: flex-end;
+
+    --width: 120px;
+    --height: 86px;
+    --nameHeight: 26px;
+    --fontSize: calc((var(--width) / 100) * 15);
+
+    width: 100%;
+    overflow: hidden;
+}
+
+ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] {
+    opacity: 1 !important;
+    filter: grayscale(0%) !important;
+    outline: none;
+}
+
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: var(--align);
+    padding: 0;
+    gap: 0;
+}
+
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] {
+    width: var(--width);
+    height: var(--height);
+    margin-bottom: 0px;
+    background-color: black;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatar"] {
+    height: var(--width);
+    width: 100%;
+    border-radius: 0;
+    border-width: 0;
+    opacity: 0.3;
+    filter: grayscale(100%);
+    transform: translateY(-22%);
+    transition: filter 0.1s ease-out, opacity 0.1s ease-out;
+    border: 0;
+}
+
+
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class^="Voice_user"] {
+    background-color: #111111;
+    position: absolute;
+    bottom: 0px;
+    padding: 0px;
+    height: var(--nameHeight);
+    width: 100%;
+}
+
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] + [class^="Voice_user"] {
+    background-color: var(--color) !important;
+}
+
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatarSpeaking"] + [class^="Voice_user"] [class^="Voice_name"] {
+    color: #222222 !important;
+}
+
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class^="Voice_user"] [class^="Voice_name"] {
+    font-size: 13px !important;
+    padding: 0px;
+    margin: 0px;
+    height: 0;
+    transform: translateY(2.5px);
+    position: relative;
+    display: inline-block;
+}

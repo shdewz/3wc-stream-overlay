@@ -35,7 +35,7 @@ html {
 	position: absolute;
 	display: flex;
 	gap: 12px;
-	top: 44px;
+	top: 53px;
 	text-shadow: 0 0 8px rgba(5, 5, 5, 0.15);
 }
 
@@ -45,13 +45,13 @@ html {
 }
 
 .now-playing {
-	right: 1120px;
+	right: 1170px;
 	text-align: right;
 	justify-content: flex-end;
 }
 
 .replayer {
-	left: 1150px;
+	left: 1200px;
 }
 
 .footer {

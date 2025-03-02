@@ -91,7 +91,7 @@ class Beatmap {
     }
     generate() {
         this.parent = $('<div></div>').addClass('map').attr('id', `map-${this.beatmap.identifier.toLowerCase()}`);
-        const image = $('<div></div>').addClass('map-image').css('background-image', `url('https://assets.ppy.sh/beatmaps/${this.beatmap.beatmapset_id}/covers/cover.jpg')`);
+        const image = $('<div></div>').addClass('map-image').css('background-image', `url('https://assets.ppy.sh/beatmaps/${this.beatmap.beatmapset_id}/covers/cover.jpg?1')`);
         this.parent.append($('<div></div>').addClass('map-image-container').append($('<div></div>').addClass('map-image-container-inside').append(image)));
 
         const content = $('<div></div>').addClass('map-content');

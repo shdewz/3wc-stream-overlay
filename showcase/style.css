@@ -35,7 +35,7 @@ html {
 	position: absolute;
 	display: flex;
 	gap: 12px;
-	top: 53px;
+	top: 42px;
 	text-shadow: 0 0 8px rgba(5, 5, 5, 0.15);
 }
 
@@ -45,13 +45,13 @@ html {
 }
 
 .now-playing {
-	right: 1170px;
+	right: 1130px;
 	text-align: right;
 	justify-content: flex-end;
 }
 
 .replayer {
-	left: 1200px;
+	left: 1160px;
 }
 
 .footer {
@@ -138,6 +138,11 @@ html {
 	line-height: 1.6rem;
 	font-weight: bold;
 	color: var(--accent);
+}
+
+.map-stats-attributes__item-value > i {
+	font-size: 1.2rem;
+	transform: translateY(-2px);
 }
 
 .logo {

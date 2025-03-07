@@ -47,7 +47,7 @@ socket.onmessage = async event => {
 		$('#cs').html(Math.round((mod_ == 'FM' ? data.beatmap.stats.cs.original : map ? stats.cs : data.beatmap.stats.cs.converted) * 10) / 10);
 		$('#ar').html(Math.round((mod_ == 'FM' ? data.beatmap.stats.ar.original : map ? stats.ar : data.beatmap.stats.ar.converted) * 10) / 10);
 		$('#od').html(Math.round((mod_ == 'FM' ? data.beatmap.stats.od.original : map ? stats.od : data.beatmap.stats.od.converted) * 10) / 10);
-		$('#sr').html((map?.sr || data.beatmap.stats.stars.total).toFixed(2) + '★');
+		$('#sr').html((map?.sr || data.beatmap.stats.stars.total).toFixed(2));
 
 		let length_modifier = map ? (mod_?.includes('DT') ? 1.5 : 1) : data.resultsScreen.mods.name.includes('DT') || data.play.mods.name.includes('DT') ? 1.5 : 1;
 		len_ = data.beatmap.time.lastObject - data.beatmap.time.firstObject;

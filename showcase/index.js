@@ -60,7 +60,7 @@ socket.onmessage = async event => {
 			$('#map_stats_background').css('background-image', `url('https://assets.ppy.sh/beatmaps/${map?.beatmapset_id}/covers/cover@2x.jpg')`);
 		}
 		else {
-			const path = `http://${location.host}/Songs/${data.folders.beatmap}/${data.files.background}`.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/');
+			const path = `http://${location.host}/Songs/${data.folders.beatmap}/${data.files.background}`.replace(/#/g, '%23').replace(/%/g, '%25').replace(/\\/g, '/').replace(/'/g, `\\'`);
 			$('#map_stats_background').css('background-image', `url('${path}')`);
 			$('#map_background').css('background-image', `url('${path}')`);
 		}

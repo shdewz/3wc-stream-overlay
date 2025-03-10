@@ -222,7 +222,7 @@ socket.onmessage = async event => {
 		$('#sr').text(`${Number(cache.map?.sr ?? data.beatmap.stats.stars.total).toFixed(2)}`);
 
 		$('#map_artist_title').text(`${data.beatmap.artist} - ${data.beatmap.title}`);
-		$('#map_difficulty').text(`[${data.beatmap.version}]`);
+		$('#map_difficulty').text(`[${data.beatmap.version}] by ${cache.map?.mapper || data.beatmap.mapper}`);
 
 		// cache.map.identifier = 'HD2';
 		if (cache.map?.identifier) {

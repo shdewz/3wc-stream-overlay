@@ -3,6 +3,7 @@ _data/streamer.json
 qualifiers/
 schedule/
 original/
+special/
 schedule*
 thumbnail*
 *.zip

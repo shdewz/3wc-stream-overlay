@@ -1,3 +1,5 @@
+@import url('../../_shared/common.css');
+
 :root {
     --map-width: 500px;
     --map-height: 60px;
@@ -22,7 +24,7 @@ html {
     height: 1080px;
     display: flex;
     flex-direction: column;
-    /* background-image: url('../_shared/assets/temp_bg.png'); */
+    /* background-image: url('../../_shared/assets/temp_bg.png'); */
     color: var(--light);
 }
 

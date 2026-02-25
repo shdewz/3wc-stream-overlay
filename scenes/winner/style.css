@@ -1,3 +1,5 @@
+@import url('../../_shared/common.css');
+
 :root {
 	--footer-height: 140px;
 }
@@ -11,65 +13,11 @@ html {
 	font-family: 'Din';
 }
 
-#controls {
-	position: absolute;
-	height: 1080px;
-	width: 300px;
-	left: 1920px;
-	background-color: #fcfcfc;
-}
-
-#middle {
-	opacity: 0;
-	transition: opacity 300ms ease;
-}
-
-.bar {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 20px 0;
-}
-
-.button {
-	background-color: #111111;
-	border: none;
-	color: white;
-	padding: 8px 16px;
-	margin: 0px 4px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 22px;
-	cursor: pointer;
-	transition: 100ms ease-out;
-	user-select: none;
-}
-
-.button:hover {
-	background-color: #575757;
-}
-
-.wide {
-	width: 140px;
-	padding: 8px 36px;
-	font-size: 18px;
-}
-
-#current_team {
-	font-size: 20px;
-	font-weight: bold;
-	text-transform: uppercase;
-}
-
-/* actual overlay */
-
 .main {
 	position: relative;
 	width: 1920px;
 	height: 1080px;
-	background-image: url('../_shared/assets/bg-edges-no-noise.png');
+	background-image: url('../../_shared/assets/bg-edges-no-noise.png');
 	color: var(--light);
 	display: flex;
 	align-items: center;
@@ -79,7 +27,7 @@ html {
 	position: absolute;
 	width: 1920px;
 	height: 1080px;
-	background-image: url('../_shared/assets/noise.png');
+	background-image: url('../../_shared/assets/noise.png');
 	z-index: 100;
 	mix-blend-mode: soft-light;
 	opacity: 0.4;
@@ -87,7 +35,7 @@ html {
 }
 
 .logo {
-	background-image: url('../_shared/assets/logo.png');
+	background-image: url('../../_shared/assets/logo.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -109,22 +57,6 @@ html {
 	padding-left: 100px;
 }
 
-.starting-soon::after {
-	content: "\2026";
-	overflow: hidden;
-	display: inline-block;
-	vertical-align: bottom;
-	animation: ellipsis steps(4, end) 2000ms infinite;
-	width: 0px;
-	margin-left: 0.1em;
-}
-
-@keyframes ellipsis {
-	to {
-		width: 1.1em;
-	}
-}
-
 .title-sub {
 	margin-left: 0.1em;
 	font-size: 0.4em;
@@ -134,7 +66,7 @@ html {
 }
 
 .title-sub-logo {
-	background-image: url('../_shared/assets/icon_round.png');
+	background-image: url('../../_shared/assets/icon_round.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -152,7 +84,7 @@ html {
 }
 
 .wooting {
-	background-image: url('../_shared/assets/sponsors/wooting.png');
+	background-image: url('../../_shared/assets/sponsors/wooting.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -161,7 +93,7 @@ html {
 }
 
 .acrid {
-	background-image: url('../_shared/assets/sponsors/acrid.png');
+	background-image: url('../../_shared/assets/sponsors/acrid.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center left;
@@ -190,23 +122,10 @@ html {
 
 .starting-title {
 	font-style: italic;
-	display: flex;
-}
-
-.starting-title-timer {
-	width: 0;
-	opacity: 0;
-	transition: 300ms ease;
-	overflow: hidden;
-}
-
-.starting-title-timer.enabled {
-	width: 10rem;
-	opacity: 1;
 }
 
 .match {
-	display: none;
+	display: flex;
 }
 
 .teams {
@@ -230,8 +149,18 @@ html {
 	font-weight: 500;
 }
 
+.score {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.team-point {
+	font-weight: 700;
+}
+
 .team-flag {
 	width: 70px;
 	height: 47px;
-	background-image: url('../_shared/assets/flags/XX.png');
+	background-image: url('../../_shared/assets/flags/XX.png');
 }

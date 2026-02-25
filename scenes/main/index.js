@@ -11,8 +11,8 @@ const timer = {
 let mappool, teams;
 (async () => {
 	$.ajaxSetup({ cache: false });
-	mappool = await $.getJSON('../_data/beatmaps.json');
-	teams = await $.getJSON('../_data/teams.json');
+	mappool = await $.getJSON('../../_data/beatmaps.json');
+	teams = await $.getJSON('../../_data/teams.json');
 	let stage = mappool.stage;
 	if (stage) $('#stage_name').text(stage);
 	carousel();
@@ -152,7 +152,7 @@ socket.onmessage = async event => {
 		$('#red_name').text(cache.nameRed);
 		const team = teams.find(t => t.team === cache.nameRed);
 
-		$('#red_flag').css('background-image', `url('../_shared/assets/flags/${team?.flag ?? 'XX'}.png')`);
+		$('#red_flag').css('background-image', `url('../../_shared/assets/flags/${team?.flag ?? 'XX'}.png')`);
 		$('#red_seed').text(`SEED ${team?.seed ?? 'X'}`);
 	}
 
@@ -161,7 +161,7 @@ socket.onmessage = async event => {
 		$('#blue_name').text(cache.nameBlue);
 		const team = teams.find(t => t.team === cache.nameBlue);
 
-		$('#blue_flag').css('background-image', `url('../_shared/assets/flags/${team?.flag ?? 'XX'}.png')`);
+		$('#blue_flag').css('background-image', `url('../../_shared/assets/flags/${team?.flag ?? 'XX'}.png')`);
 		$('#blue_seed').text(`SEED ${team?.seed ?? 'X'}`);
 	}
 

@@ -4,9 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="../_shared/common.css">
-	<script src="../_shared/deps/jquery.min.js"></script>
-	<script src="../_shared/deps/reconnecting-websocket.min.js"></script>
+	<script src="../../_shared/deps/jquery.min.js"></script>
+	<script src="../../_shared/deps/reconnecting-websocket.min.js"></script>
 </head>
 
 <body>
@@ -20,19 +19,19 @@
 				<div class="title-sub-logo"></div>
 				<div class="title-sub-text">3 Digit World Cup 2025</div>
 			</div>
-			<div class="starting-soon" id="title">Starting Soon</div>
+			<div class="stage" id="stage"></div>
 			<div class="starting-content">
-				<div class="starting-title">
-					<div class="starting-title-timer" id="timer">00:00</div>
-					<div class="starting-title-text" id="starting_title">–</div>
-				</div>
 				<div class="match" id="match">
 					<div class="teams">
 						<div class="team red">
 							<div class="team-flag" id="flag_red"></div>
 							<div class="team-name" id="name_red"></div>
 						</div>
-						<div class="vs">vs.</div>
+						<div class="score">
+							<div class="team-point" id="score_red"></div>
+							<div class="team-point-separator">-</div>
+							<div class="team-point" id="score_blue"></div>
+						</div>
 						<div class="team blue">
 							<div class="team-name" id="name_blue"></div>
 							<div class="team-flag" id="flag_blue"></div>

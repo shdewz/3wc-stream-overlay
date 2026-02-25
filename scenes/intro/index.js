@@ -1,10 +1,10 @@
 let comingup, teams, mappool;
 (async () => {
 	$.ajaxSetup({ cache: false });
-	comingup = await $.getJSON('../_data/coming_up.json');
-	teams = await $.getJSON('../_data/teams.json');
-	mappool = await $.getJSON('../_data/beatmaps.json');
-	const streamer = (await $.getJSON('../_data/streamer.json')).username;
+	comingup = await $.getJSON('../../_data/coming_up.json');
+	teams = await $.getJSON('../../_data/teams.json');
+	mappool = await $.getJSON('../../_data/beatmaps.json');
+	const streamer = (await $.getJSON('../../_data/streamer.json')).username;
 
 	if (comingup.length) {
 		const now = Date.now();
@@ -32,6 +32,7 @@ const update_match = match => {
 	if (match.showcase) {
 		$('#match').css('display', 'none');
 		$('#starting_title').text(`${mappool.stage} Mappool Showcase`);
+		// $('#starting_title').text(`Qualifier Results`);
 	}
 	else {
 		$('#match').css('display', 'flex');
@@ -61,5 +62,5 @@ const update_match = match => {
 
 const update_team = (color, team) => {
 	$(`#name_${color}`).text(team.team);
-	$(`#flag_${color}`).css('background-image', `url('../_shared/assets/flags/${team.flag}.png')`);
+	$(`#flag_${color}`).css('background-image', `url('../../_shared/assets/flags/${team.flag}.png')`);
 };

@@ -16,7 +16,7 @@ const beatmaps = new Set();
 let mappool;
 (async () => {
     $.ajaxSetup({ cache: false });
-    mappool = await $.getJSON('../_data/beatmaps.json');
+    mappool = await $.getJSON('../../_data/beatmaps.json');
 })();
 
 const socket = new ReconnectingWebSocket(`ws://${location.host}/websocket/v2`);

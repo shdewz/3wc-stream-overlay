@@ -1,3 +1,5 @@
+@import url('../../_shared/common.css');
+
 :root {
 	--border-width: 0px;
 	--border-color: none;
@@ -103,7 +105,7 @@ html {
 .team-flag {
 	width: 70px;
 	height: 47px;
-	background-image: url('../_shared/assets/flags/XX.png');
+	background-image: url('../../_shared/assets/flags/XX.png');
 }
 
 .team-name {
@@ -177,17 +179,17 @@ html {
 }
 
 .sponsor-logo.wooting {
-	background-image: url('../_shared/assets/sponsors/wooting.png');
+	background-image: url('../../_shared/assets/sponsors/wooting.png');
 }
 
 .sponsor-logo.acrid {
-	background-image: url('../_shared/assets/sponsors/acrid.png');
+	background-image: url('../../_shared/assets/sponsors/acrid.png');
 }
 
 .logo {
 	width: 230px;
 	height: 120px;
-	background-image: url('../_shared/assets/logo-new.png');
+	background-image: url('../../_shared/assets/logo-new.png');
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -234,7 +236,7 @@ html {
 .footer-accent {
 	height: 100%;
 	width: 40px;
-	background-image: url('../_shared/assets/footer_accent.png');
+	background-image: url('../../_shared/assets/footer_accent.png');
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;

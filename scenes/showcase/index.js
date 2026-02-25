@@ -3,7 +3,7 @@ const socket = new ReconnectingWebSocket('ws://' + location.host + '/websocket/v
 let mappool;
 (async () => {
 	$.ajaxSetup({ cache: false });
-	let stage = await $.getJSON('../_data/beatmaps.json');
+	let stage = await $.getJSON('../../_data/beatmaps.json');
 	mappool = stage.beatmaps;
 	if (mappool) $('#stage_name').html(`${stage.stage} MAPPOOL SHOWCASE`).css('opacity', 1);
 	else $('#stage_name').html('').css('opacity', 0);
@@ -70,6 +70,9 @@ socket.onmessage = async event => {
 
 		if (map?.original) { $('#custom_artist').text(map?.artist ?? data.beatmap.artist); $('#original').css('display', 'flex').css('opacity', 1); }
 		else { $('#custom_artist').text(''); $('#original').css('display', 'none').css('opacity', 0); }
+
+		if (map?.ez_multiplier) { $('#ez_mult').text(`${map?.ez_multiplier.toFixed(2)}x`); $('#ezmult').css('display', 'flex').css('opacity', 1); }
+		else { $('#ez_mult').text(''); $('#ezmult').css('display', 'none').css('opacity', 0); }
 
 		$('#mapper').text(map?.mapper ?? data.beatmap.mapper);
 	}

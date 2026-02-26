@@ -1,5 +1,5 @@
 const TEAMSIZE = 3;
-const DEBUG = true;
+const DEBUG = false;
 
 const cache = {};
 const timer = {

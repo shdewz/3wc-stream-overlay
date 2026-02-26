@@ -338,8 +338,10 @@ socket.onmessage = async (event) => {
       let score = data.tourney.clients[i]?.play?.score || 0;
       if (
         data.tourney.clients[i]?.play?.mods?.name?.toUpperCase().includes('EZ')
-      )
-        score *= 1.75;
+      ) {
+        score *= cache.map?.ez_mult || 1;
+      }
+
       scores.push({ id: i, score });
     }
 

@@ -14,7 +14,8 @@
       "beatmapset_id": 1689751,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 4810080,
@@ -29,7 +30,8 @@
       "beatmapset_id": 2140492,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 3613812,
@@ -44,7 +46,8 @@
       "beatmapset_id": 1765453,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 5243973,
@@ -59,7 +62,8 @@
       "beatmapset_id": 2413940,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 5538935,
@@ -74,7 +78,8 @@
       "beatmapset_id": 2512686,
       "custom": true,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 4392934,
@@ -89,7 +94,8 @@
       "beatmapset_id": 2056846,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 4638483,
@@ -104,7 +110,8 @@
       "beatmapset_id": 2183079,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 5538904,
@@ -119,7 +126,8 @@
       "beatmapset_id": 2512672,
       "custom": true,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 661784,
@@ -134,7 +142,8 @@
       "beatmapset_id": 294336,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 3107885,
@@ -149,7 +158,8 @@
       "beatmapset_id": 1461986,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 5538962,
@@ -164,7 +174,8 @@
       "beatmapset_id": 2512700,
       "custom": true,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     },
     {
       "beatmap_id": 4366467,
@@ -179,7 +190,8 @@
       "beatmapset_id": 2084590,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 2.2
     },
     {
       "beatmap_id": 2719437,
@@ -194,7 +206,8 @@
       "beatmapset_id": 1312129,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 2.0
     },
     {
       "beatmap_id": 3839691,
@@ -209,7 +222,8 @@
       "beatmapset_id": 1866625,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1.75
     },
     {
       "beatmap_id": 3583379,
@@ -224,7 +238,8 @@
       "beatmapset_id": 1751538,
       "custom": false,
       "original": false,
-      "md5": null
+      "md5": null,
+      "ez_mult": 1
     }
   ]
 }

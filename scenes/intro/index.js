@@ -1,66 +1,70 @@
 let comingup, teams, mappool;
 (async () => {
-	$.ajaxSetup({ cache: false });
-	comingup = await $.getJSON('../../_data/coming_up.json');
-	teams = await $.getJSON('../../_data/teams.json');
-	mappool = await $.getJSON('../../_data/beatmaps.json');
-	const streamer = (await $.getJSON('../../_data/streamer.json')).username;
+  $.ajaxSetup({ cache: false });
+  comingup = await $.getJSON('../../_data/coming_up.json');
+  teams = await $.getJSON('../../_data/teams.json');
+  mappool = await $.getJSON('../../_data/beatmaps.json');
+  const streamer = (await $.getJSON('../../_data/streamer.json')).username;
 
-	if (comingup.length) {
-		const now = Date.now();
-		const matches = comingup.sort((a, b) => a.time - b.time).filter(e => e.time > now - 3 * 60 * 1000);
-		if (matches.length === 0) return;
+  if (comingup.length) {
+    const now = Date.now();
+    const matches = comingup
+      .sort((a, b) => a.time - b.time)
+      .filter((e) => e.time > now - 3 * 60 * 1000);
+    if (matches.length === 0) return;
 
-		concurrent_matches = matches.filter(m => m.time == matches[0].time);
-		if (concurrent_matches.length > 1) {
-			concurrent_matches_2 = concurrent_matches.filter(m => m.streamer === streamer ?? '');
-			if (concurrent_matches_2.length === 0) {
-				update_match(concurrent_matches[0]);
-			}
-			else if (concurrent_matches_2.length > 1) {
-				console.log('you done fucked up');
-				$('#starting_title').text('MULTIPLE CONCURRENT MATCHES, CHECK JSON FILE');
-			}
-			else update_match(concurrent_matches_2[0]);
-		}
-		else update_match(concurrent_matches[0]);
-	}
-	else update_match(comingup);
+    concurrent_matches = matches.filter((m) => m.time == matches[0].time);
+    if (concurrent_matches.length > 1) {
+      concurrent_matches_2 = concurrent_matches.filter(
+        (m) => m.streamer === streamer ?? ''
+      );
+      if (concurrent_matches_2.length === 0) {
+        update_match(concurrent_matches[0]);
+      } else if (concurrent_matches_2.length > 1) {
+        console.log('you done fucked up');
+        $('#starting_title').text(
+          'MULTIPLE CONCURRENT MATCHES, CHECK JSON FILE'
+        );
+      } else update_match(concurrent_matches_2[0]);
+    } else update_match(concurrent_matches[0]);
+  } else update_match(comingup);
 })();
 
-const update_match = match => {
-	if (match.showcase) {
-		$('#match').css('display', 'none');
-		$('#starting_title').text(`${mappool.stage} Mappool Showcase`);
-		// $('#starting_title').text(`Qualifier Results`);
-	}
-	else {
-		$('#match').css('display', 'flex');
-		$('#starting_title').text(`${mappool.stage}:`);
-		const red_team = teams.find(team => team.team === match.red_team);
-		const blue_team = teams.find(team => team.team === match.blue_team);
-		update_team('red', red_team);
-		update_team('blue', blue_team);
-	}
+const update_match = (match) => {
+  if (match.showcase) {
+    $('#match').css('display', 'none');
+    $('#starting_title').text(`${mappool.stage} Mappool Showcase`);
+    // $('#starting_title').text(`Qualifier Results`);
+  } else {
+    $('#match').css('display', 'flex');
+    $('#starting_title').text(`${mappool.stage}:`);
+    const red_team = teams.find((team) => team.team === match.red_team);
+    const blue_team = teams.find((team) => team.team === match.blue_team);
+    update_team('red', red_team);
+    update_team('blue', blue_team);
+  }
 
-	if (match.time > Date.now()) {
-		$('#timer').addClass('enabled');
-		const timer_int = setInterval(() => {
-			if (match.time < Date.now() - 500) {
-				clearInterval(timer_int);
-				$('#timer').text('00:00');
-				$('#timer').removeClass('enabled');
-			}
-			const remaining = Math.floor((match.time - Date.now()) / 1000);
-			const date = new Date(null);
-			date.setSeconds(remaining);
-			const text = date.toISOString().slice(14, 19);
-			if (timer && remaining > -0.5) $('#timer').text(text);
-		}, 1000);
-	}
+  if (match.time > Date.now()) {
+    $('#timer').addClass('enabled');
+    const timer_int = setInterval(() => {
+      if (match.time < Date.now() - 500) {
+        clearInterval(timer_int);
+        $('#timer').text('00:00');
+        $('#timer').removeClass('enabled');
+      }
+      const remaining = Math.floor((match.time - Date.now()) / 1000);
+      const date = new Date(null);
+      date.setSeconds(remaining);
+      const text = date.toISOString().slice(14, 19);
+      if (timer && remaining > -0.5) $('#timer').text(text);
+    }, 1000);
+  }
 };
 
 const update_team = (color, team) => {
-	$(`#name_${color}`).text(team.team);
-	$(`#flag_${color}`).css('background-image', `url('../../_shared/assets/flags/${team.flag}.png')`);
+  $(`#name_${color}`).text(team.team);
+  $(`#flag_${color}`).css(
+    'background-image',
+    `url('../../_shared/assets/flags/${team.flag}.png')`
+  );
 };

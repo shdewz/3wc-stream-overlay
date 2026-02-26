@@ -1,166 +1,116 @@
 @import url('../../_shared/common.css');
 
 :root {
-	--footer-height: 140px;
+  --footer-height: 140px;
 }
 
 body,
 html {
-	padding: 0;
-	margin: 0;
-	/* overflow-y: hidden; */
-	/* overflow-x: hidden; */
-	font-family: 'Din';
+  padding: 0;
+  margin: 0;
+  /* overflow-y: hidden; */
+  /* overflow-x: hidden; */
+  font-family: 'Inter';
 }
 
 .main {
-	position: relative;
-	width: 1920px;
-	height: 1080px;
-	background-image: url('../../_shared/assets/bg-edges-no-noise.png');
-	color: var(--light);
-	display: flex;
-	align-items: center;
-}
-
-.noise {
-	position: absolute;
-	width: 1920px;
-	height: 1080px;
-	background-image: url('../../_shared/assets/noise.png');
-	z-index: 100;
-	mix-blend-mode: soft-light;
-	opacity: 0.4;
-	pointer-events: none;
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  color: var(--light);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 
 .logo {
-	background-image: url('../../_shared/assets/logo.png');
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 112px;
-	height: 112px;
-	position: absolute;
-	right: 94px;
-	top: 56px;
-	opacity: 0.1;
+  background-image: url('../../_shared/assets/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 112px;
+  height: 112px;
+  position: absolute;
+  right: 94px;
+  top: 56px;
 }
 
 .header {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	font-size: 8rem;
-	font-weight: bold;
-	color: var(--accent);
-	padding-left: 100px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 8rem;
+  font-weight: bold;
+  padding-left: 100px;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
 }
 
 .title-sub {
-	margin-left: 0.1em;
-	font-size: 0.4em;
-	display: flex;
-	gap: 0.3em;
-	align-items: center;
+  margin-left: 0.1em;
+  font-size: 0.4em;
+  display: flex;
+  gap: 0.3em;
+  align-items: center;
 }
 
 .title-sub-logo {
-	background-image: url('../../_shared/assets/icon_round.png');
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 1em;
-	height: 1em;
-	filter: saturate(90%);
+  background-image: url('../../_shared/assets/icon_squircle.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 1em;
+  height: 1em;
 }
-
-.sponsors {
-	position: absolute;
-	display: flex;
-	bottom: 20px;
-	left: 64px;
-	align-items: center;
-}
-
-.wooting {
-	background-image: url('../../_shared/assets/sponsors/wooting.png');
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 200px;
-	height: 46px;
-}
-
-.acrid {
-	background-image: url('../../_shared/assets/sponsors/acrid.png');
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center left;
-	width: 200px;
-	height: 32px;
-	margin-bottom: 6px;
-}
-
-.sponsor-separator {
-	font-size: 2.8rem;
-	font-weight: 800;
-	transform: rotate(45deg);
-	margin-left: 20px;
-	margin-right: 12px;
-	margin-bottom: 4px;
-}
-
-/**/
 
 .starting-content {
-	margin-top: 20px;
-	color: #fcfcfc;
-	font-size: 0.5em;
-	font-weight: 500;
+  margin-top: 20px;
+  color: #fcfcfc;
+  font-size: 0.5em;
+  font-weight: 500;
 }
 
 .starting-title {
-	font-style: italic;
+  font-style: italic;
 }
 
 .match {
-	display: flex;
+  display: flex;
 }
 
 .teams {
-	display: flex;
-	color: var(--light);
-	gap: 32px;
+  display: flex;
+  color: var(--light);
+  gap: 32px;
 }
 
 .team {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
 }
 
 .vs {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 0.8em;
-	font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8em;
+  font-weight: 500;
 }
 
 .score {
-	display: flex;
-	align-items: center;
-	gap: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .team-point {
-	font-weight: 700;
+  font-weight: 700;
 }
 
 .team-flag {
-	width: 70px;
-	height: 47px;
-	background-image: url('../../_shared/assets/flags/XX.png');
+  width: 70px;
+  aspect-ratio: 1.5;
+  background-size: contain;
+  background-image: url('../../_shared/assets/flags/XX.png');
 }

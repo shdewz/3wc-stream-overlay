@@ -1,70 +1,95 @@
 @font-face {
-    font-family: 'Mont';
-    src: url('../_shared/fonts/Mont-SemiBold.otf');
-    font-weight: 500;
+  font-family: 'Mont';
+  src: url('../_shared/fonts/Mont-SemiBold.otf');
+  font-weight: 500;
 }
 
 @font-face {
-    font-family: 'Mont';
-    src: url('../_shared/fonts/Mont-Bold.otf');
-    font-weight: 700;
+  font-family: 'Mont';
+  src: url('../_shared/fonts/Mont-Bold.otf');
+  font-weight: 700;
 }
 
 @font-face {
-    font-family: 'Din';
-    src: url('../_shared/fonts/D-DIN.otf');
-    font-weight: 500;
+  font-family: 'Din';
+  src: url('../_shared/fonts/D-DIN.otf');
+  font-weight: 500;
 }
 
 @font-face {
-    font-family: 'Din';
-    src: url('../_shared/fonts/D-DIN-Italic.otf');
-    font-weight: 500;
-    font-style: italic;
+  font-family: 'Din';
+  src: url('../_shared/fonts/D-DIN-Italic.otf');
+  font-weight: 500;
+  font-style: italic;
 }
 
 @font-face {
-    font-family: 'Din';
-    src: url('../_shared/fonts/D-DIN-Bold.otf');
-    font-weight: 700;
+  font-family: 'Din';
+  src: url('../_shared/fonts/D-DIN-Bold.otf');
+  font-weight: 700;
 }
 
 @font-face {
-    font-family: 'Inter';
-    src: url('../_shared/fonts/Inter-VariableFont_opsz,wght.ttf');
+  font-family: 'Inter';
+  src: url('../_shared/fonts/Inter-VariableFont_opsz,wght.ttf');
 }
 
 @font-face {
-    font-family: 'Inter';
-    src: url('../_shared/fonts/Inter-Italic-VariableFont_opsz,wght.ttf');
-    font-style: italic;
+  font-family: 'Inter';
+  src: url('../_shared/fonts/Inter-Italic-VariableFont_opsz,wght.ttf');
+  font-style: italic;
 }
 
 :root {
-    --accent: #78df91;
-    --dark: #111111;
-    --light: #fcfcfc;
-    --text-dark: #6f6f6f;
-    --progress-bg: #222222;
-    --accent-mod-nm: #759de7;
-    --accent-mod-hd: #eec875;
-    --accent-mod-hr: #e97777;
-    --accent-mod-dt: #ad73db;
-    --accent-mod-fm: #85e285;
-    --accent-mod-tb: #61cfc1;
-    --red: #ff605d;
-    --blue: #5da9ff;
-    --red-chat: #f89c9b;
-    --blue-chat: #96c4f8;
+  --accent: #78df91;
+  --accent2: #5bbe74;
+  --dark: #111111;
+  --light: #fcfcfc;
+  --text-dark: #6f6f6f;
+  --progress-bg: #222222;
+  --accent-mod-nm: #759de7;
+  --accent-mod-hd: #eec875;
+  --accent-mod-hr: #e97777;
+  --accent-mod-dt: #ad73db;
+  --accent-mod-fm: #85e285;
+  --accent-mod-tb: #61cfc1;
+  --red: #ff605d;
+  --blue: #5da9ff;
+  --red-chat: #f89c9b;
+  --blue-chat: #96c4f8;
 }
 
 .noise {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background-image: url('../_shared/assets/noise.png');
-	mix-blend-mode: soft-light;
-	opacity: 0.4;
-	pointer-events: none;
-    filter: grayscale(0.7);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('../_shared/assets/noise.png');
+  mix-blend-mode: soft-light;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.rotating-bg::before {
+  content: '';
+  position: absolute;
+  width: 2400px;
+  height: 2400px;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  background-image: url('assets/background-square.jpg');
+  background-size: cover;
+  background-position: center;
+  animation: bgRotate 80s linear infinite;
+  filter: brightness(0.75);
+  z-index: 0;
+}
+
+@keyframes bgRotate {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
 }
